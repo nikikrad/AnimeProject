@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mainFragment"
+        android:icon="@drawable/ic_home"
+        android:iconTint="@color/black"
+        android:title="Главная" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/black"
+        android:title="Поиск" />
+    <item
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/ic_bookmark"
+        android:iconTint="@color/black"
+        android:title="Моё" />
+    <item
+        android:id="@+id/settingFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:iconTint="@color/black"
+        android:title="Настройки" />
+</menu>
