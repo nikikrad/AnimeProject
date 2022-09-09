@@ -18,7 +18,7 @@ class MainRepository @Inject constructor(private val apiService: ApiService){
                 .subscribe({ response ->
                     observable.onNext(response)
                 }, { throwable ->
-                    Log.e("ERROR", throwable.toString())
+                    Log.e("KEK", throwable.toString())
                 })
         }
     }

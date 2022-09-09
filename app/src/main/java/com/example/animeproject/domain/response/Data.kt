@@ -1,6 +1,11 @@
 package com.example.animeproject.domain.response
 
-data class Data(
-    val id: Int,
-    val attributes: Attributes
+import com.google.gson.annotations.SerializedName
+
+data class Data (
+
+	@SerializedName("id")
+	val id : Int,
+	@SerializedName("attributes")
+	val attributes : Attributes,
 )

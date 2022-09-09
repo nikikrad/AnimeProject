@@ -3,20 +3,18 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id "dagger.hilt.android.plugin"
-    id 'com.google.gms.google-services'
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.animeproject"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
-        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -57,7 +55,6 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0" //Retrofit для REST API
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation "com.google.code.gson:gson:2.8.9" //чтобы преобразовывать Json -> Объект
     implementation "com.squareup.okhttp3:logging-interceptor:3.14.1" //для логов в ретрофите
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -72,6 +69,5 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.1.5"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
-    implementation 'com.android.support:multidex:2.0.1'
 
 }

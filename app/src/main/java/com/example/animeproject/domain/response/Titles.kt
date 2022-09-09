@@ -1,6 +1,9 @@
 package com.example.animeproject.domain.response
 
-data class Titles(
-    val en: String,
-    val ja_jp: String
+import com.google.gson.annotations.SerializedName
+
+data class Titles (
+
+	@SerializedName("en") val en : String,
+	@SerializedName("ja_jp") val ja_jp : String
 )

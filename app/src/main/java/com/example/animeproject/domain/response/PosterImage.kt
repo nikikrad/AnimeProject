@@ -1,6 +1,9 @@
 package com.example.animeproject.domain.response
 
-data class PosterImage(
-    val tiny: String,
-    val original: String
+import com.google.gson.annotations.SerializedName
+
+data class PosterImage (
+
+	@SerializedName("original")
+	val original : String
 )

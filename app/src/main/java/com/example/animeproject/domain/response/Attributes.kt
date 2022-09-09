@@ -1,13 +1,31 @@
 package com.example.animeproject.domain.response
 
-data class Attributes(
-    val description: String,
-    val titles: Titles,
-    val averageRating: String,
-    val startDate: String,
-    val endDate: String,
-    val ageRatingGuide: String,
-    val posterImage: PosterImage,
-    val coverImage: CoverImage,
-    val episodeCount: Int
+import com.google.gson.annotations.SerializedName
+
+data class Attributes (
+
+    @SerializedName("description")
+    val description : String,
+    @SerializedName("titles")
+    val titles : Titles,
+    @SerializedName("averageRating")
+    val averageRating : Double,
+    @SerializedName("startDate")
+    val startDate : String,
+    @SerializedName("endDate")
+    val endDate : String,
+    @SerializedName("nextRelease")
+    val nextRelease : String,
+    @SerializedName("ageRatingGuide")
+    val ageRatingGuide : String,
+    @SerializedName("status")
+    val status : String,
+    @SerializedName("posterImage")
+    val posterImage : PosterImage,
+    @SerializedName("coverImage")
+    val coverImage : CoverImage,
+    @SerializedName("episodeCount")
+    val episodeCount : Int,
+    @SerializedName("episodeLength")
+    val episodeLength : Int,
 )

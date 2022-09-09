@@ -31,14 +31,16 @@ class MainFragment: Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        mainRepository.getAllAnime()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
-                Log.e("KEK", response.toString())
-            }, {
-                Log.e("KEK", it.localizedMessage!!)
-            })
+            mainRepository.getAllAnime()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    Log.e("KEK", response.toString())
+                }, {
+                    Log.e("KEK", it.localizedMessage!!)
+                })
+
+
 
     }
 }
