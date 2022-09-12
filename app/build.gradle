@@ -69,5 +69,11 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.1.5"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
+    //Moxy
+    implementation "com.github.moxy-community:moxy:2.2.2"
+    kapt "com.github.moxy-community:moxy-compiler:2.2.2"
 
+    //photo from internet
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 }

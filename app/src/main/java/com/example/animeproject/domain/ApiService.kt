@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("anime")
-    fun getAllAnime(): Observable<ArrayList<AnimeResponse>>
+    fun getAllAnime(): Observable<AnimeResponse>
 }

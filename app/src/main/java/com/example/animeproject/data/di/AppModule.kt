@@ -2,11 +2,13 @@ package com.example.animeproject.data.di
 
 import com.example.animeproject.domain.ApiService
 import com.example.animeproject.domain.instance.RetrofitInstance
+import com.example.animeproject.presentation.main.MainPresenter
 import com.example.animeproject.presentation.main.repository.MainRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +25,12 @@ object AppModule {
     @Singleton
     fun provideMainRepository(apiService: ApiService): MainRepository {
         return MainRepository(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMainPresenter(mainRepository: MainRepository): MainPresenter{
+        return MainPresenter(mainRepository)
     }
 
 }
