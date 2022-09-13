@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeproject.databinding.FragmentMainBinding
 import com.example.animeproject.presentation.main.repository.MainRepository
@@ -56,19 +57,33 @@ class MainFragment : Fragment() {
 //                    Log.e("BUG", throwable.toString())
 //                })
 
-        disposable.add(mainPresenter.getAllAnime()
+//        disposable.add(mainPresenter.getAllAnime()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                Log.d("Anime", it.data.toString())
+//
+//                val adapter = MainAdapter(it.data)
+////                binding.rvAnime.layoutManager =
+////                    LinearLayoutManager(
+////                        activity?.applicationContext,
+////                        LinearLayoutManager.VERTICAL,
+////                        false
+////                    )
+//                binding.rvAnime.layoutManager = GridLayoutManager(context, 2)
+//                binding.rvAnime.adapter = adapter
+//            }, {
+//                Log.e("Error", it.localizedMessage.toString())
+//            }))
+
+        disposable.add(mainPresenter.getAnimeByName("fds")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d("Anime", it.data.toString())
 
                 val adapter = MainAdapter(it.data)
-                binding.rvAnime.layoutManager =
-                    LinearLayoutManager(
-                        activity?.applicationContext,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
+                binding.rvAnime.layoutManager = GridLayoutManager(context, 2)
                 binding.rvAnime.adapter = adapter
             }, {
                 Log.e("Error", it.localizedMessage.toString())

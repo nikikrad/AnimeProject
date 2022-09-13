@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/nikik/AndroidStudioProjects/AnimeProject/app/src/main/res/drawable/rectangle_anime_main_border.xml" value="0.123" />
         <entry key="..\:/Users/nikik/AndroidStudioProjects/AnimeProject/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/nikik/AndroidStudioProjects/AnimeProject/app/src/main/res/layout/fragment_favorite.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/nikik/AndroidStudioProjects/AnimeProject/app/src/main/res/layout/fragment_main.xml" value="0.22826086956521738" />

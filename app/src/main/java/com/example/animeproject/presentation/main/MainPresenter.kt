@@ -1,7 +1,6 @@
 package com.example.animeproject.presentation.main
 
 import android.util.Log
-import com.example.animeproject.domain.ApiService
 import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.presentation.main.repository.MainRepository
 import io.reactivex.Observable
@@ -28,6 +27,21 @@ class MainPresenter @Inject constructor(
 //            })
 //    }
     fun getAllAnime(): Observable<AnimeResponse> {
+        return Observable.create{ observable ->
+            mainRepository.getApiService().getAllAnime()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ list ->
+                    Log.d("KEK", list.toString())
+                    observable.onNext(list)
+                }, { throwable ->
+                    Log.e("BUG", throwable.toString())
+                })
+        }
+    }
+    fun getAnimeByName(n: String): Observable<AnimeResponse> {
+        val rand = (0..26).random()
+        val alf = "qwertyuiopasdfghjklzxcvbnm"
         return Observable.create{ observable ->
             mainRepository.getApiService().getAllAnime()
                 .subscribeOn(Schedulers.io())
