@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#7C7676">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Anime"
         android:layout_width="0dp"

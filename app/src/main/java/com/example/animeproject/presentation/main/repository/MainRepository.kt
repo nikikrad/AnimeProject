@@ -13,32 +13,6 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val apiService: ApiService){
 
-    private var disposable = CompositeDisposable()
-
-//    fun getAllAnime() {
-//        disposable.add(apiService.getAllAnime()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                Log.d("KEK", it.data.toString())
-//            }, {
-//
-//            }))
-//    }
-
-//    fun getAllAnime(): Observable<AnimeResponse> {
-//        return Observable.create{ observable ->
-//            apiService.getAllAnime()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ list ->
-//                    Log.d("KEK", list.toString())
-//                    observable.onNext(list)
-//                }, { throwable ->
-//                    Log.e("BUG", throwable.toString())
-//                })
-//        }
-//    }
     fun getApiService(): ApiService{
         return apiService
     }
