@@ -1,10 +1,12 @@
 package com.example.animeproject.presentation.main
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
@@ -36,7 +38,7 @@ class MainAdapter(
 
         private val name: TextView = itemView.findViewById(R.id.tv_Title)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Image))
-//        private val bundle = Bundle()
+        private val bundle = Bundle()
 
         fun bind(item: DataResponse) {
             name.text = item.attributes.titles.en_jp
@@ -47,11 +49,11 @@ class MainAdapter(
                 .into(avatar)
 
 
-//            itemView.setOnClickListener {
-//                bundle.putString("ID", item.id)
-//                Navigation.findNavController(itemView)
-//                    .navigate(R.id.action_mainFragment_to_descriptionCoinFragment, bundle)
-//            }
+            itemView.setOnClickListener {
+                bundle.putInt("ID", item.id)
+                Navigation.findNavController(itemView)
+                    .navigate(R.id.action_mainFragment_to_fullAnimeInformationFragment, bundle)
+            }
         }
     }
 }

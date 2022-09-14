@@ -2,6 +2,8 @@ package com.example.animeproject.data.di
 
 import com.example.animeproject.domain.ApiService
 import com.example.animeproject.domain.instance.RetrofitInstance
+import com.example.animeproject.presentation.anime_info.FullAnimeInformationPresenter
+import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
 import com.example.animeproject.presentation.main.MainPresenter
 import com.example.animeproject.presentation.main.repository.MainRepository
 import com.example.animeproject.presentation.search.SearchPresenter
@@ -47,4 +49,15 @@ object AppModule {
         return SearchPresenter(searchRepository)
     }
 
+    @Provides
+    @Singleton
+    fun provideFullAnimeInformationRepository(apiService: ApiService): FullAnimeInformationRepository{
+        return FullAnimeInformationRepository(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFullAnimeInformationPresenter(fullAnimeInformationRepository: FullAnimeInformationRepository): FullAnimeInformationPresenter{
+        return FullAnimeInformationPresenter(fullAnimeInformationRepository)
+    }
 }

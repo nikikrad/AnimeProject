@@ -1,11 +1,13 @@
 package com.example.animeproject.presentation.search
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
@@ -42,6 +44,7 @@ class SearchAdapter(
 //        private val bundle = Bundle()
 
         fun bind(item: DataResponse) {
+            val bundle = Bundle()
             name.text = item.attributes.titles.en_jp
 
             Glide.with(itemView)
@@ -60,11 +63,11 @@ class SearchAdapter(
 
 
 
-//            itemView.setOnClickListener {
-//                bundle.putString("ID", item.id)
-//                Navigation.findNavController(itemView)
-//                    .navigate(R.id.action_mainFragment_to_descriptionCoinFragment, bundle)
-//            }
+            itemView.setOnClickListener {
+                bundle.putInt("ID", item.id)
+                Navigation.findNavController(itemView)
+                    .navigate(R.id.action_searchFragment_to_fullAnimeInformationFragment, bundle)
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.animeproject.domain
 
 import com.example.animeproject.domain.response.AnimeResponse
+import com.example.animeproject.domain.response.DataResponse
+import com.example.animeproject.domain.response.SingleAnimeResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,6 +16,10 @@ interface ApiService {
     @GET("anime")
     fun getAnimeByName(
         @Query("filter[text]") nameAnime: String
-//        @Path("anime") nameAnime: Char
     ): Observable<AnimeResponse>
+
+    @GET("anime")
+    fun getAnimeById(
+        @Query("filter[id]") idAnime: Int
+    ): Observable<SingleAnimeResponse>
 }

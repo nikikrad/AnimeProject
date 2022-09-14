@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeproject.databinding.FragmentSearchBinding
 import com.example.animeproject.presentation.main.MainAdapter
+import com.google.android.material.elevation.ElevationOverlayProvider
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
