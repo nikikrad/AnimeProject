@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.example.animeproject.R
 import com.example.animeproject.databinding.DialogDescriptionBinding
@@ -18,12 +19,10 @@ class DescriptionDialogFragment: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView: View = inflater.inflate(R.layout.dialog_description, container, false)
         binding = DialogDescriptionBinding.inflate(inflater, container, false)
 
-        var description = arguments?.getString("DESCRIPTION")
-        binding.tvDescription.text = description
-        return rootView
+        binding.tvDescription.text = arguments?.getString("DESCRIPTION")
+        return binding.root
     }
 
     fun dismissDialog() {
