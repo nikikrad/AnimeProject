@@ -21,5 +21,10 @@ interface ApiService {
     @GET("anime")
     fun getAnimeById(
         @Query("filter[id]") idAnime: Int
-    ): Observable<SingleAnimeResponse>
+    ): Observable<AnimeResponse>
+
+    @GET("anime?page[limit]=20")
+    fun getAnime(
+        @Query("page[offset]") page: Int
+    ):Observable<AnimeResponse>
 }

@@ -34,10 +34,9 @@ class MainPresenter @Inject constructor(
     }
 
     fun getAnimeByName(): Observable<AnimeResponse> {
-        val rand = (0..26).random()
-        val alf = "qwertyuiopasdfghjklzxcvbnm"
+        val rand = (0..2000).random()
         return Observable.create { observer ->
-            disposable.add(mainRepository.getApiService().getAnimeByName(alf[rand].toString())
+            disposable.add(mainRepository.getApiService().getAnime(rand)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

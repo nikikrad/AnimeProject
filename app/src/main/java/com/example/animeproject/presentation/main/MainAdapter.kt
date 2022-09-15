@@ -41,7 +41,9 @@ class MainAdapter(
         private val bundle = Bundle()
 
         fun bind(item: DataResponse) {
-            name.text = item.attributes.titles.en_jp
+            name.text = item.attributes.titles.en
+            if (name.text.isEmpty())
+                name.text = item.attributes.titles.en_jp
 
             Glide.with(itemView)
                 .load(item.attributes.posterImage.original)
