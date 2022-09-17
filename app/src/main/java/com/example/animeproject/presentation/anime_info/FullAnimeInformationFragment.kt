@@ -99,7 +99,7 @@ class FullAnimeInformationFragment : Fragment() {
 
                     }
                     if (animeById[0].attributes.episodeCount == 1) {
-                        binding.tvCountEpisodes.text = "Аниме: 1 эпизод - " + animeById[0].attributes.episodeLength + " минут"
+                        binding.tvCountEpisodes.text = "1 эпизод - " + animeById[0].attributes.episodeLength + " минут"
                     } else
                         binding.tvCountEpisodes.text =
                             "Аниме: " + animeById[0].attributes.episodeCount.toString() + " эпизодов по " + animeById[0].attributes.episodeLength + " минуты"
@@ -118,6 +118,7 @@ class FullAnimeInformationFragment : Fragment() {
             dialogFragment.show(childFragmentManager, "h")
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

@@ -56,4 +56,9 @@ class SearchFragment: Fragment() {
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
 }

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#1E1E1E">
 
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_Cover"
         android:layout_width="match_parent"
@@ -53,6 +54,13 @@
         app:layout_constraintStart_toStartOf="@+id/tv_JapanTitle"
         app:layout_constraintTop_toBottomOf="@+id/tv_JapanTitle" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#2C2C2C"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_Description"
+        app:layout_constraintTop_toBottomOf="@+id/iv_Poster" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_DescriptionLabel"
         android:layout_width="wrap_content"
@@ -62,9 +70,9 @@
         android:text="ОПИСАНИЕ"
         android:textColor="#ffffff"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/iv_Poster"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_Poster" />
 
     <TextView
         android:id="@+id/tv_Description"
@@ -90,20 +98,27 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/tv_Description" />
 
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_CountEpisodes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="@drawable/rectangle_anime_description"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rectangle_anime_description"
+        android:padding="5dp"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Description" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="#2C2C2C"
+        app:layout_constraintTop_toBottomOf="@+id/tv_CountEpisodes" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_StartDateLabel"
@@ -136,9 +151,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rectangle_anime_series"
+        android:padding="10dp"
         android:textColor="#000000"
         android:textSize="15sp"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="@+id/tv_StartDateLabel"
         app:layout_constraintStart_toStartOf="@+id/tv_StartDateLabel"
         app:layout_constraintTop_toBottomOf="@+id/tv_StartDateLabel" />
@@ -150,9 +165,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rectangle_anime_series"
+        android:padding="10dp"
         android:textColor="#000000"
         android:textSize="15sp"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="@+id/tv_EndDateLabel"
         app:layout_constraintStart_toStartOf="@+id/tv_EndDateLabel"
         app:layout_constraintTop_toBottomOf="@+id/tv_EndDateLabel" />
