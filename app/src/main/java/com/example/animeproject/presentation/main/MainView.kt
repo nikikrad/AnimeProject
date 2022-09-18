@@ -1,7 +1,13 @@
 package com.example.animeproject.presentation.main
 
+import android.content.Context
+import com.example.animeproject.domain.response.AnimeResponse
 import moxy.MvpView
+import moxy.viewstate.strategy.alias.AddToEndSingle
 
-interface MainView : MvpView{
-//    fun mainFragment(mainFragment: MainFragment)
+interface MainView : MvpView {
+
+    @AddToEndSingle
+    fun getAnimeByName(anime: AnimeResponse)
+
 }

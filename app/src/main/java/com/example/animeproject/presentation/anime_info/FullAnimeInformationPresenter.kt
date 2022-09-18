@@ -10,28 +10,31 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class FullAnimeInformationPresenter @Inject constructor(
-    private val fullAnimeInformationRepository: FullAnimeInformationRepository
-): MvpPresenter<MainView>() {
+//@InjectViewState
+class FullAnimeInformationPresenter(
+    private val fullAnimeInformationRepository: FullAnimeInformationRepository,
+    private val fullAnimeInformationView: FullAnimeInformationView
+) : MvpPresenter<FullAnimeInformationView>() {
 
     private val disposable = CompositeDisposable()
 
-    fun getAnimeById(id: Int): Observable<AnimeResponse>{
-        return Observable.create{ observer ->
-            disposable.add(fullAnimeInformationRepository.getApiService().getAnimeById(id)
+    fun getAnimeById(id: Int) {
+        disposable.add(
+            fullAnimeInformationRepository.getApiService().getAnimeById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    observer.onNext(it)
-                },{
+                    fullAnimeInformationView.getAnimeById(it)
+//                    observer.onNext(it)
+                }, {
                     Log.e("Error", it.localizedMessage)
                 })
-            )
-        }
-
+        )
     }
 
 }
+

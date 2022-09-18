@@ -16,7 +16,6 @@ class MainAdapter(
     private val animeList: List<DataResponse>
 ) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

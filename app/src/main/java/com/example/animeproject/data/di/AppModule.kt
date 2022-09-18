@@ -33,12 +33,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMainPresenter(mainRepository: MainRepository): MainPresenter{
-        return MainPresenter(mainRepository)
-    }
-
-    @Provides
-    @Singleton
     fun provideSearchRepository(apiService: ApiService): SearchRepository {
         return SearchRepository(apiService)
     }
@@ -49,15 +43,4 @@ object AppModule {
         return SearchPresenter(searchRepository)
     }
 
-    @Provides
-    @Singleton
-    fun provideFullAnimeInformationRepository(apiService: ApiService): FullAnimeInformationRepository{
-        return FullAnimeInformationRepository(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideFullAnimeInformationPresenter(fullAnimeInformationRepository: FullAnimeInformationRepository): FullAnimeInformationPresenter{
-        return FullAnimeInformationPresenter(fullAnimeInformationRepository)
-    }
 }
