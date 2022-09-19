@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -152,8 +153,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                 .placeholder(R.drawable.ic_search)
                 .into(binding.ivPoster)
         }
-
-
 
         binding.tvTitle.text = animeById[0].attributes.titles.en
         if (binding.tvTitle.text.isEmpty())
