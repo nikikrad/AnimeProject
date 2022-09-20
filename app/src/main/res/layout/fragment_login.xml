@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_SignInLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -14,6 +15,17 @@
         android:textColor="@color/black"
         android:textSize="30sp"
         android:text="Войдите в аккаунт"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_LogOut"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:text="выйти"
+        app:layout_constraintTop_toBottomOf="@+id/tv_SignInLabel"
+        app:layout_constraintStart_toStartOf="@+id/tv_SignInLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tv_SignInLabel"/>
+
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_Login"

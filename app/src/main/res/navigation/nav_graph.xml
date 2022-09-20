@@ -47,5 +47,13 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.animeproject.presentation.setting.registrate.RegistrationFragment"
-        android:label="RegistrationFragment" />
+        android:label="RegistrationFragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/accelerate_decelerate_interpolator"
+            app:exitAnim="@android:anim/accelerate_interpolator"
+            app:popEnterAnim="@android:anim/anticipate_interpolator"
+            app:popExitAnim="@android:anim/anticipate_overshoot_interpolator" />
+    </fragment>
 </navigation>
