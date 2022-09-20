@@ -18,6 +18,10 @@ class SearchAdapter(
     private val animeList: List<DataResponse>
 ) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
+    companion object {
+        var megastatus = false
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -41,9 +45,9 @@ class SearchAdapter(
         private val coverImage: ImageView = itemView.findViewById((R.id.iv_Cover))
         private val posterImage: ImageView = itemView.findViewById((R.id.iv_Poster))
 
-//        private val bundle = Bundle()
-
         fun bind(item: DataResponse) {
+            megastatus = false
+
             val bundle = Bundle()
             name.text = item.attributes.titles.en_jp
 
@@ -57,16 +61,20 @@ class SearchAdapter(
                     .load(item.attributes.coverImage.original)
                     .placeholder(R.drawable.ic_search)
                     .into(coverImage)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("Error", e.localizedMessage)
             }
 
-
-
             itemView.setOnClickListener {
-                bundle.putInt("ID", item.id)
-                Navigation.findNavController(itemView)
-                    .navigate(R.id.action_searchFragment_to_fullAnimeInformationFragment, bundle)
+                if (megastatus == false) {
+                    megastatus = true
+                    bundle.putInt("ID", item.id)
+                    Navigation.findNavController(itemView)
+                        .navigate(
+                            R.id.action_searchFragment_to_fullAnimeInformationFragment,
+                            bundle
+                        )
+                }
             }
         }
     }

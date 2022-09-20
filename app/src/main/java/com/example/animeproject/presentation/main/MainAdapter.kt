@@ -1,6 +1,7 @@
 package com.example.animeproject.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
 import com.example.animeproject.domain.response.DataResponse
+import com.example.animeproject.presentation.search.SearchAdapter.Companion.megastatus
 
 class MainAdapter(
     private val animeList: List<DataResponse>
 ) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+
+    companion object {
+        var megastatus = false
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -38,8 +44,8 @@ class MainAdapter(
         private val name: TextView = itemView.findViewById(R.id.tv_Title)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Image))
         private val bundle = Bundle()
-
         fun bind(item: DataResponse) {
+            megastatus = false
             name.text = item.attributes.titles.en
             if (name.text.isEmpty())
                 name.text = item.attributes.titles.en_jp
@@ -49,12 +55,15 @@ class MainAdapter(
                 .placeholder(R.drawable.ic_search)
                 .into(avatar)
 
-
             itemView.setOnClickListener {
-                bundle.putInt("ID", item.id)
-                Navigation.findNavController(itemView)
-                    .navigate(R.id.action_mainFragment_to_fullAnimeInformationFragment, bundle)
+                if (megastatus == false) {
+                    megastatus = true
+                    bundle.putInt("ID", item.id)
+                    Navigation.findNavController(itemView)
+                        .navigate(R.id.action_mainFragment_to_fullAnimeInformationFragment, bundle)
+                }
             }
+
         }
     }
 }

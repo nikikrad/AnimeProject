@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "144288319232-i0t5qsc80kq0s3adp7hrksoroqa0r4l8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.animeproject",
+            "certificate_hash": "e1263beeead7afef39e9b71dc6ad8f610bebf196"
+          }
+        },
+        {
           "client_id": "144288319232-msavegfno1na823k9bhmkskbjmoj13st.apps.googleusercontent.com",
           "client_type": 3
         }
