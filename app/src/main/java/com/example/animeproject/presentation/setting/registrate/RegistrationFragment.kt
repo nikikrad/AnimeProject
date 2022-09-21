@@ -1,29 +1,28 @@
 package com.example.animeproject.presentation.setting.registrate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentRegistrationBinding
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
+import com.example.animeproject.presentation.setting.request.UserRequest
+import com.example.animeproject.presentation.setting.response.DataResponse
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 import moxy.MvpAppCompatFragment
-import java.io.FileInputStream
 
 
 class RegistrationFragment : MvpAppCompatFragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +35,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
-
+        database = Firebase.database.reference
         binding.btnLogIn.setOnClickListener {
 
             if (binding.etRepeatPassword.text.toString() == binding.etPassword.text.toString()) {
@@ -47,11 +46,25 @@ class RegistrationFragment : MvpAppCompatFragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
+                    writeNewUser("2", binding.etLogin.text.toString())
                     registerUser()
                 }
             } else {
                 Toast.makeText(context, "Пароли не совпадают!", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun writeNewUser(userId: String, email: String) {
+        val user = UserRequest(userId, email)
+        database.child("users").child(userId).setValue(user)
+        database.child("users").get().addOnSuccessListener {
+//            Log.e("TAG", it.toString() )
+//            Log.e("TAG", it.)
+            val userList: DataResponse = it.value as DataResponse
+            Log.e("TAG", userList.email)
+
+
         }
     }
 
