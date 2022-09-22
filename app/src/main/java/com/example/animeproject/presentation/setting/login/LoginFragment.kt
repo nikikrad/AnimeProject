@@ -2,7 +2,6 @@ package com.example.animeproject.presentation.setting.login
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +10,11 @@ import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentLoginBinding
-import com.example.animeproject.presentation.setting.response.DataResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.*
 import moxy.MvpAppCompatFragment
-import java.util.*
 
 class LoginFragment : MvpAppCompatFragment(){
 

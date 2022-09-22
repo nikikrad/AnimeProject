@@ -1,15 +1,13 @@
 package com.example.animeproject.presentation.setting.registrate
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.animeproject.databinding.FragmentRegistrationBinding
-import com.example.animeproject.presentation.setting.request.UserRequest
-import com.example.animeproject.presentation.setting.response.DataResponse
+import com.example.animeproject.presentation.setting.response.UserResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -23,7 +21,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
-    private var usersList: MutableList<DataResponse> = emptyList<DataResponse>().toMutableList()
+    private var usersList: MutableList<UserResponse> = emptyList<UserResponse>().toMutableList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +36,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
         binding.btnLogIn.setOnClickListener {
-
+            var checkingExistingUser = false
             if (binding.etRepeatPassword.text.toString() == binding.etPassword.text.toString()) {
                 if (binding.etPassword.text.toString().length < 6) {
                     Toast.makeText(
@@ -50,19 +48,28 @@ class RegistrationFragment : MvpAppCompatFragment() {
                     database.child("users").get().addOnSuccessListener {
                         it.children.forEach { data ->
                             usersList.add(
-                                DataResponse(
+                                UserResponse(
                                     data.child("userId").value.toString(),
                                     data.child("email").value.toString()
                                 )
                             )
                         }
                         val userValue = usersList.size
-                        checkExistingUser(
-                            usersList[userValue].userId,
-                            binding.etLogin.text.toString()
-                        )
+                        if (userValue == 0){
+                            checkingExistingUser = checkExistingUser(
+                                "0",
+                                binding.etLogin.text.toString()
+                            )
+                        }else{
+                            checkingExistingUser = checkExistingUser(
+                                usersList[userValue - 1].userId,
+                                binding.etLogin.text.toString()
+                            )
+                        }
+                        if (checkingExistingUser)
+                            registerUser()
                     }
-                    registerUser()
+
                 }
             } else {
                 Toast.makeText(context, "Пароли не совпадают!", Toast.LENGTH_SHORT).show()
@@ -73,13 +80,15 @@ class RegistrationFragment : MvpAppCompatFragment() {
     private fun checkExistingUser(userId: String, email: String): Boolean {
         usersList.forEach {
             if (email == it.email) {
-                database.child("users").child(userId).setValue(DataResponse(userId, email))
-                return true
+                return false
             }
         }
-        Toast.makeText(context, "Данный пользователь уже зарегестрирован", Toast.LENGTH_SHORT)
-            .show()
-        return false
+        if (usersList.size == 0){
+            database.child("users").child(userId).setValue(UserResponse(userId, email))
+            return true
+        }
+        database.child("users").child((userId.toInt() + 1).toString()).setValue(UserResponse((userId.toInt() + 1).toString(), email))
+        return true
     }
 
     private fun registerUser() {
