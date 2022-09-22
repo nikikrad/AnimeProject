@@ -23,6 +23,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
+    private var usersList: MutableList<DataResponse> = emptyList<DataResponse>().toMutableList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +47,21 @@ class RegistrationFragment : MvpAppCompatFragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    writeNewUser("2", binding.etLogin.text.toString())
+                    database.child("users").get().addOnSuccessListener {
+                        it.children.forEach { data ->
+                            usersList.add(
+                                DataResponse(
+                                    data.child("userId").value.toString(),
+                                    data.child("email").value.toString()
+                                )
+                            )
+                        }
+                        val userValue = usersList.size
+                        checkExistingUser(
+                            usersList[userValue].userId,
+                            binding.etLogin.text.toString()
+                        )
+                    }
                     registerUser()
                 }
             } else {
@@ -55,17 +70,16 @@ class RegistrationFragment : MvpAppCompatFragment() {
         }
     }
 
-    private fun writeNewUser(userId: String, email: String) {
-        val user = UserRequest(userId, email)
-        database.child("users").child(userId).setValue(user)
-        database.child("users").get().addOnSuccessListener {
-//            Log.e("TAG", it.toString() )
-//            Log.e("TAG", it.)
-            val userList: DataResponse = it.value as DataResponse
-            Log.e("TAG", userList.email)
-
-
+    private fun checkExistingUser(userId: String, email: String): Boolean {
+        usersList.forEach {
+            if (email == it.email) {
+                database.child("users").child(userId).setValue(DataResponse(userId, email))
+                return true
+            }
         }
+        Toast.makeText(context, "Данный пользователь уже зарегестрирован", Toast.LENGTH_SHORT)
+            .show()
+        return false
     }
 
     private fun registerUser() {

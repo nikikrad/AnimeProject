@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentLoginBinding
+import com.example.animeproject.presentation.setting.response.DataResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -27,8 +28,9 @@ import java.util.*
 
 class LoginFragment : MvpAppCompatFragment(){
 
-    lateinit var binding: FragmentLoginBinding
-    lateinit var auth: FirebaseAuth
+    private lateinit var binding: FragmentLoginBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,7 @@ class LoginFragment : MvpAppCompatFragment(){
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
+
         return binding.root
     }
 
@@ -48,10 +51,12 @@ class LoginFragment : MvpAppCompatFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         auth = FirebaseAuth.getInstance()
+        database = Firebase.database.reference
 
         binding.btnRegistration.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_registrationFragment)
         }
+
         binding.btnLogOut.setOnClickListener {
             auth.signOut()
             checkLoggedInState()
