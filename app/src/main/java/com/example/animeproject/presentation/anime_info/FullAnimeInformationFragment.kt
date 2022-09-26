@@ -172,8 +172,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                         animeById[0].attributes.endDate,
                         animeById[0].attributes.posterImage.original,
                         animeById[0].attributes.episodeCount.toString(),
-                        animeById[0].attributes.episodeLength.toString(),
-                        auth.currentUser!!.email!!
+                        animeById[0].attributes.episodeLength.toString()
                     ))
                 }else{
                     Toast.makeText(context, "Данное аниме уже добавлено!", Toast.LENGTH_SHORT).show()

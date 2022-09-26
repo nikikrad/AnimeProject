@@ -1,7 +1,6 @@
 package com.example.animeproject.presentation.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
 import com.example.animeproject.domain.response.DataResponse
-import com.example.animeproject.presentation.search.SearchAdapter.Companion.megastatus
 
 class MainAdapter(
     private val animeList: List<DataResponse>
