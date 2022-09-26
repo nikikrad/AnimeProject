@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class PosterImage (
 
 	@SerializedName("original")
-	val original : String
+	val original : String = "null"
 )

@@ -14,9 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import moxy.MvpAppCompatFragment
 
-class LoginFragment : MvpAppCompatFragment(){
+class LoginFragment : MvpAppCompatFragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var auth: FirebaseAuth
@@ -44,7 +48,8 @@ class LoginFragment : MvpAppCompatFragment(){
         database = Firebase.database.reference
 
         binding.btnRegistration.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_registrationFragment)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
         binding.btnLogOut.setOnClickListener {
@@ -57,12 +62,20 @@ class LoginFragment : MvpAppCompatFragment(){
 
     }
 
-    private fun logIn(){
-        if(binding.etLogin.text !== null && binding.etPassword.text.length >= 6){
-            auth.signInWithEmailAndPassword(binding.etLogin.text.toString(), binding.etPassword.text.toString())
-            checkLoggedInState()
-        }else{
-            Toast.makeText(context , "Неправильный ввод данных!", Toast.LENGTH_SHORT).show()
+    private fun logIn() {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (binding.etLogin.text !== null && binding.etPassword.text.length >= 6) {
+
+                auth.signInWithEmailAndPassword(
+                    binding.etLogin.text.toString(),
+                    binding.etPassword.text.toString()
+                )
+                withContext(Dispatchers.Main) {
+                    checkLoggedInState()
+                }
+            } else {
+                Toast.makeText(context, "Неправильный ввод данных!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -84,7 +97,6 @@ class LoginFragment : MvpAppCompatFragment(){
             binding.btnLogOut.isVisible = false
         }
     }
-
 
 
 }

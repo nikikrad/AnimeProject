@@ -7,5 +7,5 @@ data class CoverImage (
 	@SerializedName("tiny")
 	val tiny : String,
 	@SerializedName("original")
-	val original : String,
+	val original : String = "null"
 )
