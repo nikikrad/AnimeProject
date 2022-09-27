@@ -160,13 +160,14 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         binding.tvStartDate.text = animeById[0].attributes.startDate
         binding.tvEndDate.text = animeById[0].attributes.endDate
 
+
         binding.btnFavorite.setOnClickListener {
             if (auth.currentUser != null) {
                 if (checkerDBForUser(animeById[0].id.toString())){
                     database.child(auth.currentUser?.email.toString().substringBefore("@")).child(animeById[0].id.toString()).setValue(AnimeRequest(
                         animeById[0].id.toString(),
                         animeById[0].attributes.description,
-                        animeById[0].attributes.titles.en,
+                        animeById[0].attributes.titles.en_jp,
                         animeById[0].attributes.averageRating.toString(),
                         animeById[0].attributes.startDate,
                         animeById[0].attributes.endDate,
@@ -175,7 +176,9 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                         animeById[0].attributes.episodeLength.toString()
                     ))
                 }else{
-                    Toast.makeText(context, "Данное аниме уже добавлено!", Toast.LENGTH_SHORT).show()
+                    database.child(auth.currentUser?.email.toString().substringBefore("@")).get().addOnSuccessListener {
+                        it.child(animeById[0].id.toString()).ref.removeValue()
+                    }
                 }
             }else{
                 Toast.makeText(context, "Войдите в аккаунт!", Toast.LENGTH_SHORT).show()

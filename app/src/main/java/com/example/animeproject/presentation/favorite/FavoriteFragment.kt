@@ -1,6 +1,7 @@
 package com.example.animeproject.presentation.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class FavoriteFragment : Fragment() {
     var animeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
 
     private fun processDataFromDatabase() {
+        animeList.clear()
         database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
             .addOnSuccessListener { animeId ->
                 animeId.children.forEach { aboutAnime ->

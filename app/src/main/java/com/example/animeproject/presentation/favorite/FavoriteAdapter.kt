@@ -1,5 +1,6 @@
 package com.example.animeproject.presentation.favorite
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import com.example.animeproject.R
 import com.example.animeproject.domain.response.DataResponse
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
 
-class FavoriteAdapter (
+class FavoriteAdapter(
     private val animeList: MutableList<AnimeRequest>
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
@@ -39,16 +40,25 @@ class FavoriteAdapter (
         private val name: TextView = itemView.findViewById(R.id.tv_Title)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Poster))
         private val description: TextView = itemView.findViewById(R.id.tv_Description)
+        private val rating: TextView = itemView.findViewById(R.id.tv_Rating)
+        private var bundle = Bundle()
 
         fun bind(item: AnimeRequest) {
             name.text = item.title
             description.text = item.description
+            rating.text = "Рейтинг - ${item.rating}"
 
             Glide.with(itemView)
                 .load(item.poster)
                 .placeholder(R.drawable.ic_search)
                 .into(avatar)
 
+
+            itemView.setOnClickListener {
+                bundle.putInt("ID", item.id!!.toInt())
+                Navigation.findNavController(itemView)
+                    .navigate(R.id.action_favoriteFragment_to_fullAnimeInformationFragment, bundle)
+            }
 
         }
     }
