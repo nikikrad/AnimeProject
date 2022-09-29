@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
@@ -51,6 +52,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
     private var ID: Int = 0
     private lateinit var description: String
     private lateinit var animeById: List<DataResponse>
+    private lateinit var dialogFragment: DescriptionDialogFragment
 
     @Inject
     lateinit var fullAnimeInformationRepository: FullAnimeInformationRepository
@@ -80,16 +82,10 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
+        dialogFragment = DescriptionDialogFragment()
         ID = arguments?.getInt("ID")!!
-        presenter.getAnimeById(ID)
+        presenter.getAnimeById(ID, binding, dialogFragment, childFragmentManager)
 
-        binding.btnDescription.setOnClickListener {
-            val bundle = Bundle()
-            val dialogFragment = DescriptionDialogFragment()
-            bundle.putString("DESCRIPTION", description)
-            dialogFragment.arguments = bundle
-            dialogFragment.show(childFragmentManager, "h")
-        }
         binding.btnBack.setOnClickListener {
             Navigation.findNavController(binding.root).popBackStack()
         }
@@ -102,7 +98,13 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun getAnimeById(animeResponse: AnimeResponse) {
+    override fun getAnimeById(
+        animeResponse: AnimeResponse,
+        bind: FragmentFullAnimeInformationBinding,
+        dialog: DescriptionDialogFragment,
+        fragmentManager: FragmentManager
+    ) {
+        binding = bind
         ID = arguments?.getInt("ID")!!
         animeById = animeResponse.data
 
@@ -117,13 +119,17 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             Log.e("Error", e.localizedMessage)
         }
 
-
-        view?.let {
-            Glide.with(it)
-                .load(animeById[0].attributes.posterImage.original)
-                .placeholder(R.drawable.ic_search)
-                .into(binding.ivPoster)
+        try {
+            view?.let {
+                Glide.with(it)
+                    .load(animeById[0].attributes.posterImage.original)
+                    .placeholder(R.drawable.ic_search)
+                    .into(binding.ivPoster)
+            }
+        } catch (e: Exception) {
+            Log.e("Error", e.localizedMessage)
         }
+
 
         binding.tvTitle.text = animeById[0].attributes.titles.en
         if (binding.tvTitle.text.isEmpty())
@@ -160,44 +166,52 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         binding.tvStartDate.text = animeById[0].attributes.startDate
         binding.tvEndDate.text = animeById[0].attributes.endDate
 
-
         binding.btnFavorite.setOnClickListener {
             if (auth.currentUser != null) {
-                if (checkerDBForUser(animeById[0].id.toString())){
-                    database.child(auth.currentUser?.email.toString().substringBefore("@")).child(animeById[0].id.toString()).setValue(AnimeRequest(
-                        animeById[0].id.toString(),
-                        animeById[0].attributes.description,
-                        animeById[0].attributes.titles.en_jp,
-                        animeById[0].attributes.averageRating.toString(),
-                        animeById[0].attributes.startDate,
-                        animeById[0].attributes.endDate,
-                        animeById[0].attributes.posterImage.original,
-                        animeById[0].attributes.episodeCount.toString(),
-                        animeById[0].attributes.episodeLength.toString()
-                    ))
-                }else{
-                    database.child(auth.currentUser?.email.toString().substringBefore("@")).get().addOnSuccessListener {
-                        it.child(animeById[0].id.toString()).ref.removeValue()
-                    }
+                if (checkerDBForUser(animeById[0].id.toString())) {
+                    database.child(auth.currentUser?.email.toString().substringBefore("@"))
+                        .child(animeById[0].id.toString()).setValue(
+                            AnimeRequest(
+                                animeById[0].id.toString(),
+                                animeById[0].attributes.description,
+                                animeById[0].attributes.titles.en_jp,
+                                animeById[0].attributes.averageRating.toString(),
+                                animeById[0].attributes.startDate,
+                                animeById[0].attributes.endDate,
+                                animeById[0].attributes.posterImage.original,
+                                animeById[0].attributes.episodeCount.toString(),
+                                animeById[0].attributes.episodeLength.toString()
+                            )
+                        )
+                } else {
+                    database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
+                        .addOnSuccessListener {
+                            it.child(animeById[0].id.toString()).ref.removeValue()
+                        }
                 }
-            }else{
+            } else {
                 Toast.makeText(context, "Войдите в аккаунт!", Toast.LENGTH_SHORT).show()
             }
 
         }
+        binding.btnDescription.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("DESCRIPTION", animeById[0].attributes.description)
+            dialog.arguments = bundle
+            dialog.show(fragmentManager, "h")
+        }
     }
 
-    private fun checkerDBForUser(id: String): Boolean{
+    private fun checkerDBForUser(id: String): Boolean {
         var megaStatus = true
-        database.child(auth.currentUser?.email.toString().substringBefore("@")).get().addOnSuccessListener {
-            it.children.forEach { data ->
-                if(data.child("id").value.toString() == id){
-                    megaStatus = false
+        database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
+            .addOnSuccessListener {
+                it.children.forEach { data ->
+                    if (data.child("id").value.toString() == id) {
+                        megaStatus = false
+                    }
                 }
             }
-        }
         return megaStatus
     }
-
-
 }

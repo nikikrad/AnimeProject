@@ -36,7 +36,7 @@ class MainFragment : MvpAppCompatFragment(), MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.getAnimeByName()
+        presenter.getAnimeByName(binding)
     }
 
     override fun onDestroy() {
@@ -44,7 +44,8 @@ class MainFragment : MvpAppCompatFragment(), MainView {
         disposable.dispose()
     }
 
-    override fun getAnimeByName(anime: AnimeResponse) {
+    override fun getAnimeByName(anime: AnimeResponse, bind: FragmentMainBinding) {
+        binding = bind
         val adapter = MainAdapter(anime.data)
         binding.rvAnime.layoutManager = GridLayoutManager(context, 2)
         binding.rvAnime.adapter = adapter

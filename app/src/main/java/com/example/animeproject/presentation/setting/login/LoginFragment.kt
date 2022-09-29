@@ -83,6 +83,7 @@ class LoginFragment : MvpAppCompatFragment() {
     private fun checkLoggedInState() {
         if (auth.currentUser !== null) {
             binding.tvSignInLabel.text = "Вы онлайн!"
+            binding.tvEmail.text = auth.currentUser?.email.toString()
             binding.etLogin.isVisible = false
             binding.etPassword.isVisible = false
             binding.btnLogIn.isVisible = false
