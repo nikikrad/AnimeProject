@@ -1,11 +1,13 @@
 package com.example.animeproject.data.di
 
+import com.example.animeproject.databinding.FragmentSearchBinding
 import com.example.animeproject.domain.ApiService
 import com.example.animeproject.domain.instance.RetrofitInstance
 import com.example.animeproject.presentation.anime_info.FullAnimeInformationPresenter
 import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
 import com.example.animeproject.presentation.main.MainPresenter
 import com.example.animeproject.presentation.main.repository.MainRepository
+import com.example.animeproject.presentation.search.SearchFragment
 import com.example.animeproject.presentation.search.SearchPresenter
 import com.example.animeproject.presentation.search.repository.SearchRepository
 import dagger.Module
@@ -30,17 +32,4 @@ object AppModule {
     fun provideMainRepository(apiService: ApiService): MainRepository {
         return MainRepository(apiService)
     }
-
-    @Provides
-    @Singleton
-    fun provideSearchRepository(apiService: ApiService): SearchRepository {
-        return SearchRepository(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSearchPresenter(searchRepository: SearchRepository): SearchPresenter{
-        return SearchPresenter(searchRepository)
-    }
-
 }

@@ -8,19 +8,32 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeproject.databinding.FragmentSearchBinding
+import com.example.animeproject.domain.response.AnimeResponse
+import com.example.animeproject.presentation.anime_info.FullAnimeInformationPresenter
+import com.example.animeproject.presentation.search.repository.SearchRepository
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import moxy.MvpAppCompatFragment
+import moxy.MvpFragment
+import moxy.MvpView
+import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchFragment: Fragment() {
+class SearchFragment : MvpAppCompatFragment(), SearchView {
     lateinit var binding: FragmentSearchBinding
-    @Inject
-    lateinit var searchPresenter: SearchPresenter
 
-    private var disposable = CompositeDisposable()
+    @Inject
+    lateinit var searchRepository: SearchRepository
+
+    private val presenter: SearchPresenter by moxyPresenter {
+        SearchPresenter(
+            searchRepository,
+            this
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,32 +43,22 @@ class SearchFragment: Fragment() {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        binding.btnSend.setOnClickListener{
-            disposable.add(searchPresenter.getAnimeByName(binding.etNameAnime.text.toString())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Log.d("Anime", it.data.toString())
-
-                    val adapter = SearchAdapter(it.data)
-                    binding.rvAnime.layoutManager = LinearLayoutManager(
-                        activity?.applicationContext,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-                    binding.rvAnime.adapter = adapter
-                }, {
-                    Log.e("Error", it.localizedMessage.toString())
-                }))
-
+        binding.btnSend.setOnClickListener {
+            presenter.getAnimeByName(binding.etNameAnime.text.toString(), binding)
         }
-
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
+    override fun getAnimeByName(animeResponse: AnimeResponse, bind: FragmentSearchBinding) {
+        binding = bind
+        val adapter = SearchAdapter(animeResponse.data)
+        binding.rvAnime.layoutManager = LinearLayoutManager(
+            activity?.applicationContext,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.rvAnime.adapter = adapter
     }
+
 }

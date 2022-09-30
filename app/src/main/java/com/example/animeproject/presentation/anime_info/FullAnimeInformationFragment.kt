@@ -48,7 +48,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
 
     lateinit var binding: FragmentFullAnimeInformationBinding
 
-    private val disposable = CompositeDisposable()
     private var ID: Int = 0
     private lateinit var description: String
     private lateinit var animeById: List<DataResponse>
@@ -74,11 +73,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
@@ -91,12 +85,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         }
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
-    }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun getAnimeById(
         animeResponse: AnimeResponse,
@@ -105,7 +93,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         fragmentManager: FragmentManager
     ) {
         binding = bind
-        ID = arguments?.getInt("ID")!!
         animeById = animeResponse.data
 
         Log.e("ANIME", animeResponse.toString())
