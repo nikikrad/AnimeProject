@@ -21,9 +21,6 @@ class MainFragment : MvpAppCompatFragment(), MainView {
 
     @Inject
     lateinit var mainRepository: MainRepository
-
-    private var disposable = CompositeDisposable()
-
     private val presenter: MainPresenter by moxyPresenter { MainPresenter(mainRepository, this) }
 
     override fun onCreateView(
@@ -37,11 +34,6 @@ class MainFragment : MvpAppCompatFragment(), MainView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.getAnimeByName(binding)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
     }
 
     override fun getAnimeByName(anime: AnimeResponse, bind: FragmentMainBinding) {

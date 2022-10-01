@@ -3,24 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rectangle_anime_main_border"
-    android:layout_marginTop="5dp">
+    android:background="@drawable/search_background"
+    android:layout_margin="15sp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_Cover"
-        android:layout_width="500dp"
-        android:layout_height="250dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_Poster"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="200dp"
-        app:layout_constraintTop_toTopOf="@+id/iv_Cover"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="20dp"/>
 
@@ -28,16 +21,26 @@
         android:id="@+id/tv_NameAnime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/iv_Cover"
+        app:layout_constraintTop_toTopOf="@+id/iv_Poster"
         app:layout_constraintStart_toEndOf="@+id/iv_Poster"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="50dp"
         android:textSize="20sp"
         android:padding="5dp"
         android:maxWidth="200dp"
-        android:background="@drawable/rectangle_anime_main_border"
-        android:textColor="#ffffff"
+        android:textColor="#000"
         />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_AgeRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_NameAnime"
+        app:layout_constraintStart_toStartOf="@+id/tv_NameAnime"
+        app:layout_constraintEnd_toEndOf="@+id/tv_NameAnime"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

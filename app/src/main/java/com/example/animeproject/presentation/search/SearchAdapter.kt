@@ -41,8 +41,8 @@ class SearchAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val name: TextView = itemView.findViewById(R.id.tv_NameAnime)
-        private val coverImage: ImageView = itemView.findViewById((R.id.iv_Cover))
         private val posterImage: ImageView = itemView.findViewById((R.id.iv_Poster))
+        private val ageRating: TextView = itemView.findViewById(R.id.tv_AgeRating)
 
         fun bind(item: DataResponse) {
             megastatus = false
@@ -55,14 +55,7 @@ class SearchAdapter(
                 .placeholder(R.drawable.ic_search)
                 .into(posterImage)
 
-            try {
-                Glide.with(itemView)
-                    .load(item.attributes.coverImage.original)
-                    .placeholder(R.drawable.ic_search)
-                    .into(coverImage)
-            } catch (e: Exception) {
-                Log.e("Error", e.localizedMessage)
-            }
+           ageRating.text = item.attributes.ageRating
 
             itemView.setOnClickListener {
                 if (megastatus == false) {

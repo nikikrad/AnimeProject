@@ -95,6 +95,7 @@ class LoginFragment : MvpAppCompatFragment() {
             binding.etPassword.isVisible = true
             binding.btnLogIn.isVisible = true
             binding.btnRegistration.isVisible = true
+            binding.tvEmail.isVisible = false
             binding.btnLogOut.isVisible = false
         }
     }

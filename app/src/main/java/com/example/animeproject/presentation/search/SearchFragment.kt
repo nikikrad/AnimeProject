@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeproject.databinding.FragmentSearchBinding
 import com.example.animeproject.domain.response.AnimeResponse
@@ -45,19 +46,29 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.btnSend.setOnClickListener {
-            presenter.getAnimeByName(binding.etNameAnime.text.toString(), binding)
-        }
+//        binding.svNameAnime.setOnClickListener {
+//            presenter.getAnimeByName(binding.svNameAnime.text.toString(), binding)
+//        }
+        binding.svNameAnime.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                presenter.getAnimeByName(query!!, binding)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+
+        })
+
     }
 
     override fun getAnimeByName(animeResponse: AnimeResponse, bind: FragmentSearchBinding) {
         binding = bind
         val adapter = SearchAdapter(animeResponse.data)
-        binding.rvAnime.layoutManager = LinearLayoutManager(
-            activity?.applicationContext,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+        binding.rvAnime.layoutManager =
+            GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false)
         binding.rvAnime.adapter = adapter
     }
 
