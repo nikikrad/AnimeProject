@@ -28,4 +28,6 @@ data class Attributes (
     val episodeCount : Int,
     @SerializedName("episodeLength")
     val episodeLength : Int,
+    @SerializedName("youtubeVideoId")
+    val youtubeVideo: String
 )

@@ -10,7 +10,7 @@
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_fullAnimeInformationFragment"
-            app:destination="@id/nav_graph3" />
+            app:destination="@id/fullAnimeInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -18,7 +18,7 @@
         android:label="FavoriteFragment" >
         <action
             android:id="@+id/action_favoriteFragment_to_fullAnimeInformationFragment"
-            app:destination="@id/nav_graph3" />
+            app:destination="@id/fullAnimeInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -26,7 +26,7 @@
         android:label="SearchFragment" >
         <action
             android:id="@+id/action_searchFragment_to_fullAnimeInformationFragment"
-            app:destination="@id/nav_graph3" />
+            app:destination="@id/fullAnimeInformationFragment" />
     </fragment>
     <navigation android:id="@+id/nav_graph2"
         app:startDestination="@id/settingFragment">
@@ -59,11 +59,19 @@
                 app:destination="@id/registrationFragment" />
         </fragment>
     </navigation>
-    <navigation android:id="@+id/nav_graph3"
-        app:startDestination="@id/fullAnimeInformationFragment">
+
         <fragment
             android:id="@+id/fullAnimeInformationFragment"
             android:name="com.example.animeproject.presentation.anime_info.FullAnimeInformationFragment"
-            android:label="FullAnimeInformationFragment" />
-    </navigation>
+            android:label="FullAnimeInformationFragment" >
+            <action
+                android:id="@+id/action_fullAnimeInformationFragment_to_videoFragment"
+                app:destination="@id/videoFragment" />
+        </fragment>
+    <activity
+        android:id="@+id/videoFragment"
+        android:name="com.example.animeproject.presentation.anime_info.video.VideoFragment"
+        android:label="VideoFragment" />
+
+
 </navigation>

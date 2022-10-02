@@ -1,5 +1,6 @@
 package com.example.animeproject.presentation.anime_info
 
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color.green
 import android.graphics.Color.red
@@ -9,39 +10,32 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
 import com.example.animeproject.domain.response.AnimeResponse
-import com.example.animeproject.domain.response.Attributes
 import com.example.animeproject.domain.response.DataResponse
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
 import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
+import com.example.animeproject.presentation.anime_info.video.VideoFragment
 import com.example.animeproject.presentation.dialog_description.DescriptionDialogFragment
-import com.example.animeproject.presentation.setting.response.UserResponse
+import com.example.animeproject.presentation.main.MainFragment
+import com.google.android.youtube.player.YouTubePlayer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformationView {
@@ -83,6 +77,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         binding.btnBack.setOnClickListener {
             Navigation.findNavController(binding.root).popBackStack()
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -186,6 +181,15 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             bundle.putString("DESCRIPTION", animeById[0].attributes.description)
             dialog.arguments = bundle
             dialog.show(fragmentManager, "h")
+        }
+
+        binding.btnVideo.setOnClickListener {
+            //            val bundle = Bundle()
+            //            bundle.putString("YTVideo", animeById[0].attributes.youtubeVideo)
+            val intent = Intent(context, VideoFragment :: class.java)
+            intent.putExtra("YTVideo", animeById[0].attributes.youtubeVideo)
+//            Navigation.findNavController(binding.root).navigate(R.id.action_fullAnimeInformationFragment_to_videoFragment, bundle)
+            startActivity(intent)
         }
     }
 
