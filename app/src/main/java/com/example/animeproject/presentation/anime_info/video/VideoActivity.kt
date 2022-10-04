@@ -1,34 +1,22 @@
 package com.example.animeproject.presentation.anime_info.video
 
-import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.animeproject.R
-import com.example.animeproject.databinding.ActivityMainBinding
-import com.example.animeproject.databinding.FragmentVideoBinding
+import com.example.animeproject.databinding.ActivityVideoBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerFragment
-import com.google.android.youtube.player.YouTubePlayerSupportFragment
 
-class VideoFragment : YouTubeBaseActivity() {
+class VideoActivity : YouTubeBaseActivity() {
 
-    private lateinit var binding: FragmentVideoBinding
+    private lateinit var binding: ActivityVideoBinding
     private lateinit var youtubePlayerInit: YouTubePlayer.OnInitializedListener
+    private var timeVideo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentVideoBinding.inflate(layoutInflater)
+        binding = ActivityVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -42,6 +30,7 @@ class VideoFragment : YouTubeBaseActivity() {
                 p2: Boolean
             ) {
                 p1?.loadVideo(videoId)
+                p1?.setFullscreen(true)
             }
 
             override fun onInitializationFailure(

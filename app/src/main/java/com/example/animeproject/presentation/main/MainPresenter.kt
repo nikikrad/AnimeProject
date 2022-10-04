@@ -22,7 +22,7 @@ class MainPresenter(
     private var disposable = CompositeDisposable()
 
     fun getAnimeByName(binding: FragmentMainBinding) {
-        val rand = (0..50).random()
+        val rand = (0..5000).random()
         disposable.add(
             mainRepository.getApiService().getAnime(rand)
                 .subscribeOn(Schedulers.io())

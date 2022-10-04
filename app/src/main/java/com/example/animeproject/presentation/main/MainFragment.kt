@@ -34,6 +34,9 @@ class MainFragment : MvpAppCompatFragment(), MainView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.getAnimeByName(binding)
+        binding.swipeToRefresh.setOnRefreshListener {
+            refreshMainView()
+        }
     }
 
     override fun getAnimeByName(anime: AnimeResponse, bind: FragmentMainBinding) {
@@ -41,6 +44,11 @@ class MainFragment : MvpAppCompatFragment(), MainView {
         val adapter = MainAdapter(anime.data)
         binding.rvAnime.layoutManager = GridLayoutManager(context, 2)
         binding.rvAnime.adapter = adapter
+    }
+
+    fun refreshMainView(){
+        presenter.getAnimeByName(binding)
+        binding.swipeToRefresh.isRefreshing = false
     }
 
 }

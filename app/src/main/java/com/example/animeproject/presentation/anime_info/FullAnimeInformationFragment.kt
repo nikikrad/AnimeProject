@@ -2,8 +2,6 @@ package com.example.animeproject.presentation.anime_info
 
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Color.green
-import android.graphics.Color.red
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +12,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
@@ -23,15 +20,16 @@ import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.domain.response.DataResponse
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
 import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
-import com.example.animeproject.presentation.anime_info.video.VideoFragment
+import com.example.animeproject.presentation.anime_info.video.VideoActivity
 import com.example.animeproject.presentation.dialog_description.DescriptionDialogFragment
-import com.example.animeproject.presentation.main.MainFragment
-import com.google.android.youtube.player.YouTubePlayer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -42,6 +40,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
 
     lateinit var binding: FragmentFullAnimeInformationBinding
 
+    private var disposable = CompositeDisposable()
     private var ID: Int = 0
     private lateinit var description: String
     private lateinit var animeById: List<DataResponse>
@@ -148,34 +147,55 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         binding.tvStartDate.text = animeById[0].attributes.startDate
         binding.tvEndDate.text = animeById[0].attributes.endDate
 
-        binding.btnFavorite.setOnClickListener {
-            if (auth.currentUser != null) {
-                if (checkerDBForUser(animeById[0].id.toString())) {
-                    database.child(auth.currentUser?.email.toString().substringBefore("@"))
-                        .child(animeById[0].id.toString()).setValue(
-                            AnimeRequest(
-                                animeById[0].id.toString(),
-                                animeById[0].attributes.description,
-                                animeById[0].attributes.titles.en_jp,
-                                animeById[0].attributes.averageRating.toString(),
-                                animeById[0].attributes.startDate,
-                                animeById[0].attributes.endDate,
-                                animeById[0].attributes.posterImage.original,
-                                animeById[0].attributes.episodeCount.toString(),
-                                animeById[0].attributes.episodeLength.toString()
-                            )
-                        )
-                } else {
-                    database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
-                        .addOnSuccessListener {
-                            it.child(animeById[0].id.toString()).ref.removeValue()
-                        }
-                }
-            } else {
-                Toast.makeText(context, "Войдите в аккаунт!", Toast.LENGTH_SHORT).show()
-            }
+        disposable.add(
+            presenter.getStatusAnime(animeById[0].id.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ statusAnime ->
+                    if (statusAnime) {
+                        binding.btnFavorite.setImageResource(R.drawable.ic_baseline_empty_star)
+                    } else
+                        binding.btnFavorite.setImageResource(R.drawable.ic_baseline_full_star)
 
-        }
+                    binding.btnFavorite.setOnClickListener {
+                        if (auth.currentUser != null) {
+                            if (statusAnime) {
+                                database.child(
+                                    auth.currentUser?.email.toString().substringBefore("@")
+                                )
+                                    .child(animeById[0].id.toString()).setValue(
+                                        AnimeRequest(
+                                            animeById[0].id.toString(),
+                                            animeById[0].attributes.description,
+                                            animeById[0].attributes.titles.en_jp,
+                                            animeById[0].attributes.averageRating.toString(),
+                                            animeById[0].attributes.startDate,
+                                            animeById[0].attributes.endDate,
+                                            animeById[0].attributes.posterImage.original,
+                                            animeById[0].attributes.episodeCount.toString(),
+                                            animeById[0].attributes.episodeLength.toString()
+                                        )
+                                    )
+                                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_full_star)
+                            } else {
+                                database.child(
+                                    auth.currentUser?.email.toString().substringBefore("@")
+                                ).get()
+                                    .addOnSuccessListener {
+                                        it.child(animeById[0].id.toString()).ref.removeValue()
+                                    }
+                                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_empty_star)
+                            }
+                        } else {
+                            Toast.makeText(context, "Войдите в аккаунт!", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                }, {
+                    Log.e("Error", it.localizedMessage)
+                })
+        )
+
         binding.btnDescription.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("DESCRIPTION", animeById[0].attributes.description)
@@ -184,25 +204,13 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         }
 
         binding.btnVideo.setOnClickListener {
-            //            val bundle = Bundle()
-            //            bundle.putString("YTVideo", animeById[0].attributes.youtubeVideo)
-            val intent = Intent(context, VideoFragment :: class.java)
+            val intent = Intent(context, VideoActivity::class.java)
             intent.putExtra("YTVideo", animeById[0].attributes.youtubeVideo)
-//            Navigation.findNavController(binding.root).navigate(R.id.action_fullAnimeInformationFragment_to_videoFragment, bundle)
             startActivity(intent)
         }
     }
 
-    private fun checkerDBForUser(id: String): Boolean {
-        var megaStatus = true
-        database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
-            .addOnSuccessListener {
-                it.children.forEach { data ->
-                    if (data.child("id").value.toString() == id) {
-                        megaStatus = false
-                    }
-                }
-            }
-        return megaStatus
+    private fun checkerDBForUser(id: String) {
+
     }
 }

@@ -34,7 +34,7 @@
 
         </activity>
 
-        <activity android:name=".presentation.anime_info.video.VideoFragment">
+        <activity android:name=".presentation.anime_info.video.VideoActivity">
 
         </activity>
 
