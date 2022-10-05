@@ -3,6 +3,7 @@ package com.example.animeproject.presentation.anime_info.video
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Toast
+import com.example.animeproject.BuildConfig
 import com.example.animeproject.databinding.ActivityVideoBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
@@ -42,8 +43,9 @@ class VideoActivity : YouTubeBaseActivity() {
 
 
         }
+
         binding.youtubePlayer.initialize(
-            "AIzaSyCF1j71oYhcrKqet9yAOlRS2LA2iz05k3E",
+            BuildConfig.API_KEY,
             youtubePlayerInit
         )
     }
