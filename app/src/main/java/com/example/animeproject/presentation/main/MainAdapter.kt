@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -31,6 +33,7 @@ class MainAdapter(
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.bind(animeList[position])
+        holder.constraint.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.scale_anim)
     }
 
     override fun getItemCount(): Int = animeList.size
@@ -41,6 +44,7 @@ class MainAdapter(
 
         private val name: TextView = itemView.findViewById(R.id.tv_Title)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Image))
+        val constraint: ConstraintLayout = itemView.findViewById(R.id.constraint_main)
         private val bundle = Bundle()
         fun bind(item: DataResponse) {
             megastatus = false

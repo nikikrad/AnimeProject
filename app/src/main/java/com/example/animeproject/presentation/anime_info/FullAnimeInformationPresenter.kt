@@ -27,9 +27,10 @@ class FullAnimeInformationPresenter(
     private val fullAnimeInformationView: FullAnimeInformationView
 ) : MvpPresenter<FullAnimeInformationView>() {
 
-
-    private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var database: DatabaseReference
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     private val disposable = CompositeDisposable()
 

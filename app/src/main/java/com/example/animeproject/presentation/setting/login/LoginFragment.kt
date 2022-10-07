@@ -14,17 +14,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import moxy.MvpAppCompatFragment
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : MvpAppCompatFragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+    @Inject
+    lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,8 +34,6 @@ class LoginFragment : MvpAppCompatFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        auth = FirebaseAuth.getInstance()
-
         return binding.root
     }
 
@@ -43,9 +43,6 @@ class LoginFragment : MvpAppCompatFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        auth = FirebaseAuth.getInstance()
-        database = Firebase.database.reference
 
         binding.btnRegistration.setOnClickListener {
             Navigation.findNavController(binding.root)
@@ -63,13 +60,14 @@ class LoginFragment : MvpAppCompatFragment() {
     }
 
     private fun logIn() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             if (binding.etLogin.text !== null && binding.etPassword.text.length >= 6) {
 
                 auth.signInWithEmailAndPassword(
                     binding.etLogin.text.toString(),
                     binding.etPassword.text.toString()
-                )
+                ).addOnFailureListener { binding.tvErrorLabel.isVisible = true }
+                delay(1100)
                 withContext(Dispatchers.Main) {
                     checkLoggedInState()
                 }
@@ -88,6 +86,7 @@ class LoginFragment : MvpAppCompatFragment() {
             binding.etPassword.isVisible = false
             binding.btnLogIn.isVisible = false
             binding.btnRegistration.isVisible = false
+            binding.tvErrorLabel.isVisible = false
             binding.btnLogOut.isVisible = true
         } else {
             binding.tvSignInLabel.text = "Войдите в аккаунт"

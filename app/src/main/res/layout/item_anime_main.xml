@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_margin="8dp"
+    android:id="@+id/constraint_main"
     android:background="@drawable/rectangle_anime_main_border"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="180dp"

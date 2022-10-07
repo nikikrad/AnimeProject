@@ -67,6 +67,17 @@
         android:hint="Пароль"
         />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_ErrorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/et_Password"
+        app:layout_constraintStart_toStartOf="@+id/et_Password"
+        android:layout_marginStart="5dp"
+        android:visibility="invisible"
+        android:text="Неправильный логин или пароль"
+        android:textColor="@color/design_default_color_error"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_LogIn"
         android:layout_width="200dp"

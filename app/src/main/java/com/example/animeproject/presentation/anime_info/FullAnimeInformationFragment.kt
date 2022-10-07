@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
@@ -54,8 +55,10 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             this
         )
     }
-    private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var database: DatabaseReference
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,13 +70,13 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        auth = FirebaseAuth.getInstance()
-        database = Firebase.database.reference
+
         dialogFragment = DescriptionDialogFragment()
         ID = arguments?.getInt("ID")!!
         presenter.getAnimeById(ID, binding, dialogFragment, childFragmentManager)
 
         binding.btnBack.setOnClickListener {
+            binding.btnBack.animation = AnimationUtils.loadAnimation(context, R.anim.scale_anim)
             Navigation.findNavController(binding.root).popBackStack()
         }
 
@@ -173,7 +176,8 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                                             animeById[0].attributes.endDate,
                                             animeById[0].attributes.posterImage.original,
                                             animeById[0].attributes.episodeCount.toString(),
-                                            animeById[0].attributes.episodeLength.toString()
+                                            animeById[0].attributes.episodeLength.toString(),
+                                            status = false
                                         )
                                     )
                                 binding.btnFavorite.setImageResource(R.drawable.ic_baseline_full_star)
@@ -195,8 +199,8 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                     Log.e("Error", it.localizedMessage)
                 })
         )
-
         binding.btnDescription.setOnClickListener {
+            binding.btnDescription.animation = AnimationUtils.loadAnimation(context, R.anim.alpha_anim)
             val bundle = Bundle()
             bundle.putString("DESCRIPTION", animeById[0].attributes.description)
             dialog.arguments = bundle
@@ -208,9 +212,5 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             intent.putExtra("YTVideo", animeById[0].attributes.youtubeVideo)
             startActivity(intent)
         }
-    }
-
-    private fun checkerDBForUser(id: String) {
-
     }
 }

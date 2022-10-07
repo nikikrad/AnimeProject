@@ -16,12 +16,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoriteBinding
-    private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var database: DatabaseReference
+    @Inject
+    lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -34,8 +39,6 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        auth = FirebaseAuth.getInstance()
-        database = Firebase.database.reference
         if (auth.currentUser == null) {
             binding.rvFavorite.isVisible = false
             binding.tvAuth.isVisible = true
@@ -63,7 +66,8 @@ class FavoriteFragment : Fragment() {
                             aboutAnime.child("endDate").value.toString(),
                             aboutAnime.child("poster").value.toString(),
                             aboutAnime.child("episodeCount").value.toString(),
-                            aboutAnime.child("episodeLength").value.toString()
+                            aboutAnime.child("episodeLength").value.toString(),
+                            aboutAnime.child("status").value as Boolean
                         )
                     )
                 }

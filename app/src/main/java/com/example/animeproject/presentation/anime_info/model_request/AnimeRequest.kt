@@ -9,5 +9,6 @@ data class AnimeRequest(
     var endDate: String? = "null",
     var poster: String? = "null",
     var episodeCount: String? = "null",
-    var episodeLength: String? = "null"
+    var episodeLength: String? = "null",
+    var status: Boolean
 )
