@@ -16,6 +16,8 @@
         android:hint="One Peace"
         android:padding="2dp"
         android:textAlignment="center"
+        android:fontFamily="@font/alkalami_regular"
+
         android:textColor="#FFFFFF"
         app:autoSizeMaxTextSize="20sp"
         app:autoSizeMinTextSize="10sp"

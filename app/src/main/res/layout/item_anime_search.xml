@@ -2,18 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/search_background"
-    android:layout_margin="15sp">
+    android:layout_margin="5dp"
+    android:background="@drawable/search_background">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
         android:background="#C0BEBE"
-        app:cardCornerRadius="10dp"
-        android:layout_margin="20dp"
+        app:cardCornerRadius="16dp"
+        android:layout_margin="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -36,6 +36,8 @@
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="20sp"
+        android:fontFamily="@font/alkalami_regular"
+
         android:padding="5dp"
         android:maxWidth="200dp"
         android:textColor="#000"
@@ -49,6 +51,7 @@
         app:layout_constraintStart_toStartOf="@+id/tv_NameAnime"
         app:layout_constraintEnd_toEndOf="@+id/tv_NameAnime"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/rus_regular"
         android:textColor="@color/black"
         android:textSize="16sp"/>
 

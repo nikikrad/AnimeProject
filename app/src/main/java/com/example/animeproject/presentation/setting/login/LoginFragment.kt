@@ -61,7 +61,7 @@ class LoginFragment : MvpAppCompatFragment() {
 
     private fun logIn() {
         CoroutineScope(Dispatchers.Main).launch {
-            if (binding.etLogin.text !== null && binding.etPassword.text.length >= 6) {
+            if (binding.etLogin.text !== null && binding.etPassword.text?.length!! >= 6) {
 
                 auth.signInWithEmailAndPassword(
                     binding.etLogin.text.toString(),

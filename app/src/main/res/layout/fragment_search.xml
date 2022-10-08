@@ -21,6 +21,7 @@
         android:background="@drawable/search_background"
         android:inputType="textShortMessage"
         app:iconifiedByDefault="false"
+        style="@style/font_alkalami_regular"
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@android:color/transparent"
         app:queryHint="Введите название..." />

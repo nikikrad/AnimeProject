@@ -46,9 +46,6 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        binding.svNameAnime.setOnClickListener {
-//            presenter.getAnimeByName(binding.svNameAnime.text.toString(), binding)
-//        }
         binding.svNameAnime.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -68,7 +65,11 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
         binding = bind
         val adapter = SearchAdapter(animeResponse.data)
         binding.rvAnime.layoutManager =
-            GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(
+                activity?.applicationContext,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
         binding.rvAnime.adapter = adapter
     }
 
