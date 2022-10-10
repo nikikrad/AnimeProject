@@ -11,8 +11,7 @@ import com.example.animeproject.presentation.setting.registrate.RegistrationFrag
 class MyFragmentAdapter(
     fragmentManager: FragmentManager?,
     lifecycle: Lifecycle?
-) :
-    FragmentStateAdapter(fragmentManager!!, lifecycle!!) {
+) : FragmentStateAdapter(fragmentManager!!, lifecycle!!) {
 
     override fun createFragment(position: Int): Fragment {
         return if (position == 1) {

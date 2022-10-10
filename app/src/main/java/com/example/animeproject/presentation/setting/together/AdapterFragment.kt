@@ -25,12 +25,10 @@ class AdapterFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-//        binding.tabLayout(binding.tabLayout.newTab().text = "Регистрация")
-        binding.tabLayout.newTab().text = "Авторизация"
-        binding.tabLayout.newTab().text = "Регистрация"
         myFragmentAdapter = MyFragmentAdapter(childFragmentManager, lifecycle)
         binding.viewPager2.adapter = myFragmentAdapter
 
+        binding.tabLayout.
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 binding.viewPager2.currentItem = tab!!.position
