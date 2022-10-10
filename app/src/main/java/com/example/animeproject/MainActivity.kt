@@ -30,14 +30,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.findNavController()
         val bottomNavigationView = binding.bnvNavigation
-//        bottomNavigationView
-//            .menu.forEach {
-//                TooltipCompat.setTooltipText(bottomNavigationView.findViewById(it.itemId), null)
-//            }
         bottomNavigationView
             .menu.forEach {
                 bottomNavigationView.findViewById<View>(it.itemId).setOnLongClickListener {
-                    // add any code which you want to execute on long click
                     true
                 }
             }
