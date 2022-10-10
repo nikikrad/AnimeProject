@@ -100,4 +100,9 @@ dependencies {
 
 //pullToRefresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //gifImage
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
+
+
 }

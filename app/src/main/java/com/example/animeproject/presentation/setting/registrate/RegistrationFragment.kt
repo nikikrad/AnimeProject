@@ -39,11 +39,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
             var checkingExistingUser = false
             if (binding.etRepeatPassword.text.toString() == binding.etPassword.text.toString()) {
                 if (binding.etPassword.text.toString().length < 6) {
-                    Toast.makeText(
-                        context,
-                        "Пароль должен быть больше 6 символов",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.tvErrorLabel.text = "Пароль должен быть больше 6 символов"
                 } else {
                     database.child("users").get().addOnSuccessListener {
                         it.children.forEach { data ->
@@ -68,11 +64,12 @@ class RegistrationFragment : MvpAppCompatFragment() {
                         }
                         if (checkingExistingUser)
                             registerUser()
+                        else binding.tvErrorLabel.text = "Данный пользователь зарегестрирован!"
                     }
 
                 }
             } else {
-                Toast.makeText(context, "Пароли не совпадают!", Toast.LENGTH_SHORT).show()
+                binding.tvErrorLabel.text = "Пароли не совпадают!"
             }
         }
     }
@@ -96,7 +93,9 @@ class RegistrationFragment : MvpAppCompatFragment() {
         val password = binding.etPassword.text.toString()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                auth.createUserWithEmailAndPassword(email, password)
+                auth.createUserWithEmailAndPassword(email, password).addOnFailureListener {  exception ->
+                    binding.tvErrorLabel.text = exception.toString()
+                }
                 withContext(Dispatchers.Main) {
                     checkLoggedInState()
                 }
@@ -110,7 +109,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
 
     private fun checkLoggedInState() {
         Toast.makeText(context, "Вы Зарегестрировались!", Toast.LENGTH_SHORT).show()
-        Navigation.findNavController(binding.root).popBackStack()
+//        Navigation.findNavController(binding.root).popBackStack()
     }
 
 }

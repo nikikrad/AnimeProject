@@ -23,8 +23,10 @@ import javax.inject.Inject
 class LoginFragment : MvpAppCompatFragment() {
 
     private lateinit var binding: FragmentLoginBinding
+
     @Inject
     lateinit var auth: FirebaseAuth
+
     @Inject
     lateinit var database: DatabaseReference
 
@@ -44,10 +46,10 @@ class LoginFragment : MvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.btnRegistration.setOnClickListener {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_loginFragment_to_registrationFragment)
-        }
+//        binding.btnRegistration.setOnClickListener {
+//            Navigation.findNavController(binding.root)
+//                .navigate(R.id.action_loginFragment_to_registrationFragment)
+//        }
 
         binding.btnLogOut.setOnClickListener {
             auth.signOut()
@@ -66,13 +68,16 @@ class LoginFragment : MvpAppCompatFragment() {
                 auth.signInWithEmailAndPassword(
                     binding.etLogin.text.toString(),
                     binding.etPassword.text.toString()
-                ).addOnFailureListener { binding.tvErrorLabel.isVisible = true }
+                ).addOnFailureListener {
+                    binding.tvErrorLabel.text = "Неправильный логин или пароль"
+                    binding.tvErrorLabel.isVisible = true
+                }
                 delay(1100)
                 withContext(Dispatchers.Main) {
                     checkLoggedInState()
                 }
             } else {
-                Toast.makeText(context, "Неправильный ввод данных!", Toast.LENGTH_SHORT).show()
+                binding.tvErrorLabel.text = "Неправильный ввод данных!"
             }
         }
     }
@@ -85,7 +90,7 @@ class LoginFragment : MvpAppCompatFragment() {
             binding.etLogin.isVisible = false
             binding.etPassword.isVisible = false
             binding.btnLogIn.isVisible = false
-            binding.btnRegistration.isVisible = false
+//            binding.btnRegistration.isVisible = false
             binding.tvErrorLabel.isVisible = false
             binding.btnLogOut.isVisible = true
         } else {
@@ -93,7 +98,7 @@ class LoginFragment : MvpAppCompatFragment() {
             binding.etLogin.isVisible = true
             binding.etPassword.isVisible = true
             binding.btnLogIn.isVisible = true
-            binding.btnRegistration.isVisible = true
+//            binding.btnRegistration.isVisible = true
             binding.tvEmail.isVisible = false
             binding.btnLogOut.isVisible = false
         }

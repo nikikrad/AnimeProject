@@ -26,12 +26,18 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".presentation.splashscreen.SplashScreenActivity"
+            android:exported="true"
+            android:label="MULTINFO"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity android:name=".presentation.anime_info.video.VideoActivity">

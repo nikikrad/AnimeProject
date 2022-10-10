@@ -37,6 +37,9 @@
             <action
                 android:id="@+id/action_settingFragment_to_loginFragment"
                 app:destination="@id/loginFragment" />
+            <action
+                android:id="@+id/action_settingFragment_to_adapterFragment"
+                app:destination="@id/adapterFragment" />
         </fragment>
         <fragment
             android:id="@+id/registrationFragment"
@@ -58,6 +61,10 @@
                 android:id="@+id/action_loginFragment_to_registrationFragment"
                 app:destination="@id/registrationFragment" />
         </fragment>
+        <fragment
+            android:id="@+id/adapterFragment"
+            android:name="com.example.animeproject.presentation.setting.together.AdapterFragment"
+            android:label="AdapterFragment" />
     </navigation>
 
         <fragment
@@ -72,6 +79,7 @@
         android:id="@+id/videoFragment"
         android:name="com.example.animeproject.presentation.anime_info.video.VideoActivity"
         android:label="VideoFragment" />
+
 
 
 </navigation>

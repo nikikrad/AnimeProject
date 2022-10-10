@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D0D1D5"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/materialButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:text="MULT\nINFO"
+        android:fontFamily="@font/bold_alkalami"
+        android:textColor="@color/black"
+        android:layout_marginStart="100dp"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:src="@drawable/icon_anime_app"
+        app:layout_constraintBottom_toBottomOf="@+id/materialButton"
+        app:layout_constraintEnd_toStartOf="@+id/materialButton"
+        app:layout_constraintTop_toTopOf="@+id/materialButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
