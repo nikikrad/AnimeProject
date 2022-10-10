@@ -34,11 +34,7 @@
         android:background="@color/black"
         app:itemIconTint="#C0BEBE"
         app:itemTextColor="@color/white"
-        app:itemRippleColor="@color/white"
+        app:itemRippleColor="@null"
         app:menu="@menu/bottom_menu"/>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

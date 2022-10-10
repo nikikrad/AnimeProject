@@ -28,7 +28,13 @@ class AdapterFragment: Fragment() {
         myFragmentAdapter = MyFragmentAdapter(childFragmentManager, lifecycle)
         binding.viewPager2.adapter = myFragmentAdapter
 
-        binding.tabLayout.
+        binding.tabLayout.setOnLongClickListener(object: View.OnLongClickListener{
+            override fun onLongClick(v: View?): Boolean {
+                return false
+            }
+
+        })
+
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 binding.viewPager2.currentItem = tab!!.position

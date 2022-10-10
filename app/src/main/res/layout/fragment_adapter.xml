@@ -15,6 +15,7 @@
         app:tabIndicatorColor="#50274C"
         app:tabIndicatorGravity="stretch"
         app:tabMode="fixed"
+        app:tabRippleColor="@null"
         android:background="#C0BEBE"
         app:tabSelectedTextColor="@color/white" >
         <com.google.android.material.tabs.TabItem
