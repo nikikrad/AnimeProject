@@ -51,19 +51,18 @@ class RegistrationFragment : MvpAppCompatFragment() {
                             )
                         }
                         val userValue = usersList.size
-                        if (userValue == 0){
+                        if (userValue == 0) {
                             checkingExistingUser = checkExistingUser(
-                                "0",
                                 binding.etLogin.text.toString()
                             )
-                        }else{
+                        } else {
                             checkingExistingUser = checkExistingUser(
-                                usersList[userValue - 1].userId,
+
                                 binding.etLogin.text.toString()
                             )
                         }
                         if (checkingExistingUser)
-                            registerUser()
+                            registerUser(usersList[userValue - 1].userId)
                         else binding.tvErrorLabel.text = "Данный пользователь зарегестрирован!"
                     }
 
@@ -74,31 +73,31 @@ class RegistrationFragment : MvpAppCompatFragment() {
         }
     }
 
-    private fun checkExistingUser(userId: String, email: String): Boolean {
+    private fun checkExistingUser(email: String): Boolean {
         usersList.forEach {
             if (email == it.email) {
                 return false
             }
         }
-        if (usersList.size == 0){
-            database.child("users").child(userId).setValue(UserResponse(userId, email))
+        if (usersList.size == 0) {
             return true
         }
-        database.child("users").child((userId.toInt() + 1).toString()).setValue(UserResponse((userId.toInt() + 1).toString(), email))
         return true
     }
 
-    private fun registerUser() {
+    private fun registerUser(userId: String) {
         val email = binding.etLogin.text.toString()
         val password = binding.etPassword.text.toString()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                auth.createUserWithEmailAndPassword(email, password).addOnFailureListener {  exception ->
-                    binding.tvErrorLabel.text = exception.toString()
-                }
-                withContext(Dispatchers.Main) {
-                    checkLoggedInState()
-                }
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnFailureListener { exception ->
+                        binding.tvErrorLabel.text = exception.toString()
+                    }.addOnSuccessListener {
+                        database.child("users").child((userId.toInt() + 1).toString())
+                            .setValue(UserResponse((userId.toInt() + 1).toString(), email))
+                        checkLoggedInState()
+                    }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
@@ -109,7 +108,6 @@ class RegistrationFragment : MvpAppCompatFragment() {
 
     private fun checkLoggedInState() {
         Toast.makeText(context, "Вы Зарегестрировались!", Toast.LENGTH_SHORT).show()
-//        Navigation.findNavController(binding.root).popBackStack()
     }
 
 }

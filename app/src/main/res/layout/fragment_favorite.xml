@@ -6,9 +6,23 @@
     android:background="@drawable/sasori_back">
 
   <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rv_Favorite"
+      android:id="@+id/rv_Watched"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+      android:layout_height="300dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="50dp"/>
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_UnWatched"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="50dp"/>
+
 
   <TextView
       android:id="@+id/tv_Auth"
@@ -23,6 +37,18 @@
       android:textSize="25sp"
       android:visibility="invisible"
       android:textColor="#C0BEBE"/>
+
+  <ProgressBar
+      android:id="@+id/pb_Loading"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:indeterminateDrawable="@drawable/spinner"
+      android:indeterminateOnly="true"
+      android:layout_marginBottom="30dp"
+      android:layout_width="30dp"
+      android:layout_height="30dp"/>
 
 
 

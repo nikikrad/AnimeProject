@@ -25,4 +25,17 @@
         app:queryBackground="@android:color/transparent"
         app:queryHint="Введите название..." />
 
+    <ProgressBar
+        android:id="@+id/pb_Loading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateDrawable="@drawable/spinner"
+        android:indeterminateOnly="true"
+        android:visibility="invisible"
+        android:layout_marginBottom="30dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

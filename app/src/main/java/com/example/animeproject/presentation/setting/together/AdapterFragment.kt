@@ -31,7 +31,6 @@ class AdapterFragment: Fragment() {
         binding.viewPager2.adapter = myFragmentAdapter
 
         val tabStrip = binding.tabLayout.getChildAt(0) as LinearLayout
-
         for (i in 0 until tabStrip.childCount) {
             tabStrip.getChildAt(i).setOnLongClickListener {
                 true
@@ -41,12 +40,6 @@ class AdapterFragment: Fragment() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 binding.viewPager2.currentItem = tab!!.position
-
-//                tab.view.forEach {
-//                    binding.tabLayout.findViewById<View>(it.id).setOnLongClickListener {
-//                        false
-//                    }
-//                }
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }

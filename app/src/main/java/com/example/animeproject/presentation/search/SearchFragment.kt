@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,6 +51,7 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 presenter.getAnimeByName(query!!, binding)
+                binding.pbLoading.isVisible = true
                 return false
             }
 
@@ -63,6 +65,7 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
 
     override fun getAnimeByName(animeResponse: AnimeResponse, bind: FragmentSearchBinding) {
         binding = bind
+        binding.pbLoading.isVisible = animeResponse.data.isEmpty()
         val adapter = SearchAdapter(animeResponse.data)
         binding.rvAnime.layoutManager =
             LinearLayoutManager(

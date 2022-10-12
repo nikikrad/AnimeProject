@@ -79,7 +79,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             binding.btnBack.animation = AnimationUtils.loadAnimation(context, R.anim.scale_anim)
             Navigation.findNavController(binding.root).popBackStack()
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -90,6 +89,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         fragmentManager: FragmentManager
     ) {
         binding = bind
+        binding.pbLoading.isVisible = animeResponse.data.isEmpty()
         animeById = animeResponse.data
 
         Log.e("ANIME", animeResponse.toString())

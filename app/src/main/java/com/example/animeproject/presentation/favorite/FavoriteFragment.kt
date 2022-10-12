@@ -40,10 +40,10 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (auth.currentUser == null) {
-            binding.rvFavorite.isVisible = false
+            binding.rvWatched.isVisible = false
             binding.tvAuth.isVisible = true
         } else {
-            binding.rvFavorite.isVisible = true
+            binding.rvWatched.isVisible = true
             binding.tvAuth.isVisible = false
             processDataFromDatabase()
         }
@@ -56,6 +56,9 @@ class FavoriteFragment : Fragment() {
         database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
             .addOnSuccessListener { animeId ->
                 animeId.children.forEach { aboutAnime ->
+                    if (aboutAnime.child("status").value as Boolean){
+
+                    }
                     animeList.add(
                         AnimeRequest(
                             aboutAnime.child("id").value.toString(),
@@ -71,13 +74,14 @@ class FavoriteFragment : Fragment() {
                         )
                     )
                 }
+                binding.pbLoading.isVisible = animeList.isEmpty()
                 val adapter = FavoriteAdapter(animeList)
                 val linearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
                 linearLayoutManager.reverseLayout = true
                 linearLayoutManager.stackFromEnd = true
-                binding.rvFavorite.layoutManager = linearLayoutManager
-                binding.rvFavorite.adapter = adapter
+                binding.rvWatched.layoutManager = linearLayoutManager
+                binding.rvWatched.adapter = adapter
             }
     }
 }

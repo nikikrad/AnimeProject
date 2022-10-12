@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.animeproject.databinding.FragmentMainBinding
 import com.example.animeproject.domain.response.AnimeResponse
@@ -41,6 +42,7 @@ class MainFragment : MvpAppCompatFragment(), MainView {
 
     override fun getAnimeByName(anime: AnimeResponse, bind: FragmentMainBinding) {
         binding = bind
+        binding.pbLoading.isVisible = anime.data.isEmpty()
         val adapter = MainAdapter(anime.data)
         binding.rvAnime.layoutManager = GridLayoutManager(context, 2)
         binding.rvAnime.adapter = adapter
