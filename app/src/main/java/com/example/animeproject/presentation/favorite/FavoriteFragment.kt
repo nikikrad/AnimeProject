@@ -1,21 +1,16 @@
 package com.example.animeproject.presentation.favorite
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeproject.databinding.FragmentFavoriteBinding
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
-import com.example.animeproject.presentation.main.MainAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,46 +37,85 @@ class FavoriteFragment : Fragment() {
         if (auth.currentUser == null) {
             binding.rvWatched.isVisible = false
             binding.tvAuth.isVisible = true
+            binding.pbLoading.isVisible = false
         } else {
             binding.rvWatched.isVisible = true
             binding.tvAuth.isVisible = false
+            binding.pbLoading.isVisible = true
             processDataFromDatabase()
+        }
+        binding.secondSwipeToRefresh.setOnRefreshListener {
+            refreshMainView()
+        }
+        binding.firstSwipeToRefresh.setOnRefreshListener {
+            refreshMainView()
         }
     }
 
-    var animeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
+    private var watchedAnimeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
+    private var unwatchedAnimeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
 
     private fun processDataFromDatabase() {
-        animeList.clear()
+        watchedAnimeList.clear()
+        unwatchedAnimeList.clear()
         database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
             .addOnSuccessListener { animeId ->
                 animeId.children.forEach { aboutAnime ->
                     if (aboutAnime.child("status").value as Boolean){
-
-                    }
-                    animeList.add(
-                        AnimeRequest(
-                            aboutAnime.child("id").value.toString(),
-                            aboutAnime.child("description").value.toString(),
-                            aboutAnime.child("title").value.toString(),
-                            aboutAnime.child("rating").value.toString(),
-                            aboutAnime.child("startDate").value.toString(),
-                            aboutAnime.child("endDate").value.toString(),
-                            aboutAnime.child("poster").value.toString(),
-                            aboutAnime.child("episodeCount").value.toString(),
-                            aboutAnime.child("episodeLength").value.toString(),
-                            aboutAnime.child("status").value as Boolean
+                        watchedAnimeList.add(
+                            AnimeRequest(
+                                aboutAnime.child("id").value.toString(),
+                                aboutAnime.child("description").value.toString(),
+                                aboutAnime.child("title").value.toString(),
+                                aboutAnime.child("rating").value.toString(),
+                                aboutAnime.child("startDate").value.toString(),
+                                aboutAnime.child("endDate").value.toString(),
+                                aboutAnime.child("poster").value.toString(),
+                                aboutAnime.child("episodeCount").value.toString(),
+                                aboutAnime.child("episodeLength").value.toString(),
+                                aboutAnime.child("status").value as Boolean
+                            )
                         )
-                    )
+                    }else{
+                        unwatchedAnimeList.add(
+                            AnimeRequest(
+                                aboutAnime.child("id").value.toString(),
+                                aboutAnime.child("description").value.toString(),
+                                aboutAnime.child("title").value.toString(),
+                                aboutAnime.child("rating").value.toString(),
+                                aboutAnime.child("startDate").value.toString(),
+                                aboutAnime.child("endDate").value.toString(),
+                                aboutAnime.child("poster").value.toString(),
+                                aboutAnime.child("episodeCount").value.toString(),
+                                aboutAnime.child("episodeLength").value.toString(),
+                                aboutAnime.child("status").value as Boolean
+                            )
+                        )
+                    }
                 }
-                binding.pbLoading.isVisible = animeList.isEmpty()
-                val adapter = FavoriteAdapter(animeList)
+                binding.pbLoading.isVisible = watchedAnimeList.isEmpty()
+                val adapterWatched = FavoriteWatchedAdapter(watchedAnimeList)
                 val linearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
                 linearLayoutManager.reverseLayout = true
                 linearLayoutManager.stackFromEnd = true
                 binding.rvWatched.layoutManager = linearLayoutManager
-                binding.rvWatched.adapter = adapter
+                binding.rvWatched.adapter = adapterWatched
+
+                val adapterUnWatched = FavoriteUnwatchedAdapter(unwatchedAnimeList)
+                val unWatchedLinearLayoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+                unWatchedLinearLayoutManager.reverseLayout = true
+                unWatchedLinearLayoutManager.stackFromEnd = true
+                binding.rvUnWatched.layoutManager = unWatchedLinearLayoutManager
+                binding.rvUnWatched.adapter = adapterUnWatched
             }
+    }
+
+    fun refreshMainView(){
+        processDataFromDatabase()
+        binding.firstSwipeToRefresh.isRefreshing = false
+        binding.secondSwipeToRefresh.isRefreshing = false
+
     }
 }

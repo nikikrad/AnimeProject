@@ -1,6 +1,5 @@
 package com.example.animeproject.presentation.favorite
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,18 +13,15 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
-import com.example.animeproject.domain.response.DataResponse
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-class FavoriteAdapter(
+class FavoriteWatchedAdapter(
     private val animeList: MutableList<AnimeRequest>
-) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+) : RecyclerView.Adapter<FavoriteWatchedAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -53,7 +49,6 @@ class FavoriteAdapter(
 
         private val name: TextView = itemView.findViewById(R.id.tv_Title)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Poster))
-        private val description: TextView = itemView.findViewById(R.id.tv_Description)
         private val rating: TextView = itemView.findViewById(R.id.tv_Rating)
         val constraint: ConstraintLayout = itemView.findViewById(R.id.constraintMain)
         private val watcher: ToggleButton = itemView.findViewById(R.id.btn_Watching)
@@ -62,7 +57,7 @@ class FavoriteAdapter(
 
         fun bind(item: AnimeRequest) {
             name.text = item.title
-            description.text = item.description
+//            description.text = item.description
             rating.text = "Рейтинг - ${item.rating}"
 
             Glide.with(itemView)
