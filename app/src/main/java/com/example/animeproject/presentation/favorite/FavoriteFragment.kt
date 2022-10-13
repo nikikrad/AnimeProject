@@ -44,9 +44,7 @@ class FavoriteFragment : Fragment() {
             binding.pbLoading.isVisible = true
             processDataFromDatabase()
         }
-        binding.secondSwipeToRefresh.setOnRefreshListener {
-            refreshMainView()
-        }
+
         binding.firstSwipeToRefresh.setOnRefreshListener {
             refreshMainView()
         }
@@ -54,6 +52,8 @@ class FavoriteFragment : Fragment() {
 
     private var watchedAnimeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
     private var unwatchedAnimeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
+    private lateinit var adapterWatched: FavoriteWatchedAdapter
+    private lateinit var adapterUnWatched : FavoriteUnwatchedAdapter
 
     private fun processDataFromDatabase() {
         watchedAnimeList.clear()
@@ -94,7 +94,8 @@ class FavoriteFragment : Fragment() {
                     }
                 }
                 binding.pbLoading.isVisible = watchedAnimeList.isEmpty()
-                val adapterWatched = FavoriteWatchedAdapter(watchedAnimeList)
+                adapterWatched = FavoriteWatchedAdapter(watchedAnimeList)
+                adapterWatched.notifyDataSetChanged()
                 val linearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
                 linearLayoutManager.reverseLayout = true
@@ -102,7 +103,8 @@ class FavoriteFragment : Fragment() {
                 binding.rvWatched.layoutManager = linearLayoutManager
                 binding.rvWatched.adapter = adapterWatched
 
-                val adapterUnWatched = FavoriteUnwatchedAdapter(unwatchedAnimeList)
+                adapterUnWatched = FavoriteUnwatchedAdapter(unwatchedAnimeList)
+                adapterUnWatched.notifyDataSetChanged()
                 val unWatchedLinearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
                 unWatchedLinearLayoutManager.reverseLayout = true
@@ -113,9 +115,13 @@ class FavoriteFragment : Fragment() {
     }
 
     fun refreshMainView(){
+        binding.rvWatched.recycledViewPool.clear()
+        binding.rvUnWatched.recycledViewPool.clear()
+        adapterWatched.notifyDataSetChanged()
+        adapterUnWatched.notifyDataSetChanged()
+
         processDataFromDatabase()
         binding.firstSwipeToRefresh.isRefreshing = false
-        binding.secondSwipeToRefresh.isRefreshing = false
 
     }
 }
