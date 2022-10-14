@@ -156,9 +156,12 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ statusAnime ->
                     if (statusAnime) {
+                        binding.btnFavorite.isVisible = true
                         binding.btnFavorite.setImageResource(R.drawable.ic_baseline_empty_star)
-                    } else
+                    } else{
+                        binding.btnFavorite.isVisible = true
                         binding.btnFavorite.setImageResource(R.drawable.ic_baseline_full_star)
+                    }
 
                     binding.btnFavorite.setOnClickListener {
                         if (auth.currentUser != null) {

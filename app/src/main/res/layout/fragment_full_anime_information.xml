@@ -20,6 +20,7 @@
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:background="#372828"
+        android:visibility="invisible"
         android:src="@drawable/ic_baseline_empty_star"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
@@ -103,6 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_JapanTitle" />
 
             <View
+                android:id="@+id/v_Second"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="#2C2C2C"
@@ -128,7 +130,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:fontFamily="@font/alkalami_regular"
@@ -147,7 +148,7 @@
                 android:textColor="#ffffff"
                 android:textSize="25sp"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_Description" />
+                app:layout_constraintBottom_toBottomOf="@+id/v_Second" />
 
 
             <androidx.appcompat.widget.AppCompatTextView

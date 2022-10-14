@@ -64,9 +64,8 @@ class FullAnimeInformationPresenter(
                             megaStatus = false
                         }
                     }
+                    observable.onNext(megaStatus)
                 }
-            Thread.sleep(1000)
-            observable.onNext(megaStatus)
         }
 
     }

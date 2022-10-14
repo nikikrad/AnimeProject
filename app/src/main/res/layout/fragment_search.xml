@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/kisame_back">
+    android:background="@drawable/kisame_back"
+    app:layoutDescription="@xml/fragment_search_scene">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Anime"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="100dp"
         app:layout_constraintTop_toBottomOf="@+id/sv_NameAnime" />
 
     <androidx.appcompat.widget.SearchView
@@ -27,15 +27,15 @@
 
     <ProgressBar
         android:id="@+id/pb_Loading"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="30dp"
         android:indeterminateDrawable="@drawable/spinner"
         android:indeterminateOnly="true"
         android:visibility="invisible"
-        android:layout_marginBottom="30dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
