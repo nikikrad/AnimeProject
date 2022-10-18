@@ -38,6 +38,7 @@ class FavoriteFragment : Fragment() {
             binding.rvWatched.isVisible = false
             binding.tvAuth.isVisible = true
             binding.pbLoading.isVisible = false
+            binding.pbLoading.isVisible = false
         } else {
             binding.rvWatched.isVisible = true
             binding.tvAuth.isVisible = false

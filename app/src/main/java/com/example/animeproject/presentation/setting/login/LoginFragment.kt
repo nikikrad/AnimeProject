@@ -46,11 +46,6 @@ class LoginFragment : MvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-//        binding.btnRegistration.setOnClickListener {
-//            Navigation.findNavController(binding.root)
-//                .navigate(R.id.action_loginFragment_to_registrationFragment)
-//        }
-
         binding.btnLogOut.setOnClickListener {
             auth.signOut()
             checkLoggedInState()
@@ -90,7 +85,6 @@ class LoginFragment : MvpAppCompatFragment() {
             binding.etLogin.isVisible = false
             binding.etPassword.isVisible = false
             binding.btnLogIn.isVisible = false
-//            binding.btnRegistration.isVisible = false
             binding.tvErrorLabel.isVisible = false
             binding.btnLogOut.isVisible = true
         } else {
@@ -98,7 +92,6 @@ class LoginFragment : MvpAppCompatFragment() {
             binding.etLogin.isVisible = true
             binding.etPassword.isVisible = true
             binding.btnLogIn.isVisible = true
-//            binding.btnRegistration.isVisible = true
             binding.tvEmail.isVisible = false
             binding.btnLogOut.isVisible = false
         }
