@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.animeproject.R
 import com.example.animeproject.databinding.DialogDescriptionBinding
 
-class DescriptionDialogFragment: DialogFragment() {
+class DescriptionDialogFragment : DialogFragment() {
 
     private lateinit var binding: DialogDescriptionBinding
 
@@ -23,13 +23,5 @@ class DescriptionDialogFragment: DialogFragment() {
 
         binding.tvDescription.text = arguments?.getString("DESCRIPTION")
         return binding.root
-    }
-
-    fun dismissDialog() {
-        try{
-            dismiss()
-        }catch (e: Exception){
-            Log.e("Error: ", e.toString())
-        }
     }
 }
