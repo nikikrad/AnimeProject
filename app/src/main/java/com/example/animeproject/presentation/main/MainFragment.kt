@@ -19,7 +19,6 @@ import javax.inject.Inject
 class MainFragment : MvpAppCompatFragment(), MainView {
 
     lateinit var binding: FragmentMainBinding
-
     @Inject
     lateinit var mainRepository: MainRepository
     private val presenter: MainPresenter by moxyPresenter { MainPresenter(mainRepository, this) }

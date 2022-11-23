@@ -1,7 +1,6 @@
 package com.example.animeproject.presentation.anime_info.video
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import com.example.animeproject.BuildConfig
 import com.example.animeproject.databinding.ActivityVideoBinding
@@ -13,7 +12,6 @@ class VideoActivity : YouTubeBaseActivity() {
 
     private lateinit var binding: ActivityVideoBinding
     private lateinit var youtubePlayerInit: YouTubePlayer.OnInitializedListener
-    private var timeVideo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
