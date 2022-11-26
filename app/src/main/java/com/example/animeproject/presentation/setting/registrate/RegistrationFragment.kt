@@ -106,7 +106,7 @@ class RegistrationFragment : MvpAppCompatFragment() {
         }
     }
 
-    private fun checkLoggedInState() {
+        private fun checkLoggedInState() {
         Toast.makeText(context, "Вы Зарегестрировались!", Toast.LENGTH_SHORT).show()
     }
 

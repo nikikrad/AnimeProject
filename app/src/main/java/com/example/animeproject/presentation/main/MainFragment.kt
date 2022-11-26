@@ -18,7 +18,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : MvpAppCompatFragment(), MainView {
 
-    lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentMainBinding
     @Inject
     lateinit var mainRepository: MainRepository
     private val presenter: MainPresenter by moxyPresenter { MainPresenter(mainRepository, this) }
@@ -33,13 +33,13 @@ class MainFragment : MvpAppCompatFragment(), MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.getAnimeByName(binding)
+        presenter.getAnime(binding)
         binding.swipeToRefresh.setOnRefreshListener {
             refreshMainView()
         }
     }
 
-    override fun getAnimeByName(anime: AnimeResponse, bind: FragmentMainBinding) {
+    override fun getAnime(anime: AnimeResponse, bind: FragmentMainBinding) {
         binding = bind
         binding.pbLoading.isVisible = anime.data.isEmpty()
         val adapter = MainAdapter(anime.data)
@@ -47,8 +47,8 @@ class MainFragment : MvpAppCompatFragment(), MainView {
         binding.rvAnime.adapter = adapter
     }
 
-    fun refreshMainView(){
-        presenter.getAnimeByName(binding)
+    private fun refreshMainView(){
+        presenter.getAnime(binding)
         binding.swipeToRefresh.isRefreshing = false
     }
 

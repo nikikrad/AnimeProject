@@ -14,21 +14,17 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
 import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.domain.response.DataResponse
-import com.example.animeproject.presentation.anime_info.dialog.SendCommentSheetDialog
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
 import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
 import com.example.animeproject.presentation.anime_info.video.VideoActivity
 import com.example.animeproject.presentation.dialog_description.DescriptionDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -216,11 +212,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             val intent = Intent(context, VideoActivity::class.java)
             intent.putExtra("YTVideo", animeById[0].attributes.youtubeVideo)
             startActivity(intent)
-        }
-
-        binding.btnSendComment.setOnClickListener {
-            val dialog = SendCommentSheetDialog()
-            dialog.show(fragmentManager, "Huh")
         }
     }
 }

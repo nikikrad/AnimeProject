@@ -9,6 +9,6 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 interface MainView : MvpView {
 
     @AddToEndSingle
-    fun getAnimeByName(anime: AnimeResponse, binding: FragmentMainBinding)
+    fun getAnime(anime: AnimeResponse, binding: FragmentMainBinding)
 
 }

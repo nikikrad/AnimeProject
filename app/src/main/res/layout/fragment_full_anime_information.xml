@@ -250,30 +250,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_EndDate" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_Comments"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_height="300dp"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_Video"/>
-
-                <TextView
-                    android:id="@+id/btn_SendComment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:background="@drawable/back_for_send_comment"
-                    android:text="Оставить свой комментарий"
-                    android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:padding="10dp"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_Comments"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_margin="20dp"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
