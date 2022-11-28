@@ -1,5 +1,6 @@
 package com.example.animeproject.presentation.anime_info.video
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Toast
 import com.example.animeproject.BuildConfig
@@ -17,7 +18,7 @@ class VideoActivity : YouTubeBaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+//        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         val videoId = intent.extras?.get("YTVideo").toString()
 

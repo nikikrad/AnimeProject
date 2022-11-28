@@ -1,6 +1,7 @@
 package com.example.animeproject.presentation.splashscreen
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ class SplashScreenActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
         supportActionBar?.hide()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         Handler().postDelayed({
             val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
