@@ -30,7 +30,6 @@ class VideoActivity : YouTubeBaseActivity() {
                 p2: Boolean
             ) {
                 p1?.loadVideo(videoId)
-                p1?.setFullscreen(true)
             }
 
             override fun onInitializationFailure(

@@ -88,9 +88,9 @@ dependencies {
     implementation "com.github.moxy-community:moxy-material:$moxy_version"
     implementation "com.github.moxy-community:moxy-ktx:$moxy_version"
 
-        //photo from internet
-        implementation 'com.github.bumptech.glide:glide:4.13.0'
-        annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    //photo from internet
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     // Room components
     implementation "androidx.room:room-runtime:2.4.2"

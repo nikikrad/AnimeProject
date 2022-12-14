@@ -79,7 +79,10 @@
         android:id="@+id/videoFragment"
         android:name="com.example.animeproject.presentation.anime_info.video.VideoActivity"
         android:label="VideoFragment" />
-
+    <fragment
+        android:id="@+id/serialVideoFragment"
+        android:name="com.example.animeproject.presentation.anime_info.serial_video.SerialVideoFragment"
+        android:label="SerialVideoFragment" />
 
 
 </navigation>

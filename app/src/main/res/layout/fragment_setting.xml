@@ -19,17 +19,6 @@
         android:textColor="@color/white"
         android:text="Вход в аккаунт"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_ThemeSetting"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:fontFamily="@font/rus_regular"
-        app:layout_constraintTop_toBottomOf="@+id/btn_LogIn"
-        android:background="@drawable/back_for_settings"
-        android:text="Тема приложения"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

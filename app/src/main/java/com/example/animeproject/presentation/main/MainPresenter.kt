@@ -10,6 +10,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -26,7 +28,7 @@ class MainPresenter(
         disposable.add(
             mainRepository.getApiService().getAnime(rand)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.computation())
                 .subscribe({
                     Log.d("Anime", it.data.toString())
                     mainView.getAnime(it, binding)
@@ -34,6 +36,7 @@ class MainPresenter(
                     Log.e("Error", it?.localizedMessage.toString())
                 })
         )
+       
     }
 
     override fun onDestroy() {

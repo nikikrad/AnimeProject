@@ -18,16 +18,42 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_WatchedAnimeLabel"
+                android:layout_width="match_parent"
+                android:background="#C0BEBE"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="4dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_Watched"
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
-                android:layout_marginTop="50dp" />
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/tv_UnWatchedAnimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:padding="4dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="#C0BEBE"
+                android:textColor="@color/black"
+                android:layout_gravity="center"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_UnWatched"
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
+                android:layout_marginTop="10dp"
                 />
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

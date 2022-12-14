@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
@@ -213,5 +214,6 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             intent.putExtra("YTVideo", animeById[0].attributes.youtubeVideo)
             startActivity(intent)
         }
+
     }
 }

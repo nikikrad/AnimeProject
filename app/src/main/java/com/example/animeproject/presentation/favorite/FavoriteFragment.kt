@@ -96,6 +96,7 @@ class FavoriteFragment : Fragment() {
                 }
                 binding.pbLoading.isVisible = watchedAnimeList.isEmpty()
                 adapterWatched = FavoriteWatchedAdapter(watchedAnimeList)
+                binding.tvWatchedAnimeLabel.text = "Просмотренных аниме - ${watchedAnimeList.size}"
                 adapterWatched.notifyDataSetChanged()
                 val linearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
@@ -105,6 +106,7 @@ class FavoriteFragment : Fragment() {
                 binding.rvWatched.adapter = adapterWatched
 
                 adapterUnWatched = FavoriteUnwatchedAdapter(unwatchedAnimeList)
+                binding.tvUnWatchedAnimeLabel.text = "Не просмотренных аниме - ${unwatchedAnimeList.size}"
                 adapterUnWatched.notifyDataSetChanged()
                 val unWatchedLinearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
