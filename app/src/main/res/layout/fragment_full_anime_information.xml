@@ -30,6 +30,17 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_Share"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_Favorite"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_share"
+            android:background="#372828"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_Back"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -249,6 +260,41 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_EndDate" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/rectangle_anime_main_border"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/btn_Video">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_Comment"
+                        android:layout_width="300dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintTop_toBottomOf="@id/btn_Video"
+                        android:inputType="textCapSentences"
+                        android:maxLength="144"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_SendComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="bottom"
+                        android:text="Отправить"
+                        android:textAllCaps="false"
+                        android:textSize="10sp"
+                        android:background="@drawable/rectangle_anime_main_border"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
 
 
 

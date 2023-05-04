@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -30,6 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -213,6 +218,32 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
             val intent = Intent(context, VideoActivity::class.java)
             intent.putExtra("YTVideo", animeById[0].attributes.youtubeVideo)
             startActivity(intent)
+        }
+
+        binding.btnShare.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+                shareIntent.type = "image/*"
+                val image = presenter.bitmapImage(
+                    requireContext(),
+                    animeResponse.data[0].attributes.posterImage.original
+                )
+                withContext(Dispatchers.Main) {
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, image)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${animeResponse.data[0].attributes.titles.en_jp}\n\nhttps://www.youtube.com/watch?v=${animeResponse.data[0].attributes.youtubeVideo}")
+                    requireActivity().startActivity(
+                        Intent.createChooser(
+                            shareIntent,
+                            "Share image"
+                        )
+                    )
+                }
+
+            }
+        }
+
+        binding.btnSendComment.setOnClickListener {
+
         }
 
     }

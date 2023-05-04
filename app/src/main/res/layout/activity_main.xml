@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bnv_navigation"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
-        />
+        tools:layout="@layout/fragment_main" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_navigation"

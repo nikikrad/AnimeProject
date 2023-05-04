@@ -51,5 +51,4 @@ class MainFragment : MvpAppCompatFragment(), MainView {
         presenter.getAnime(binding)
         binding.swipeToRefresh.isRefreshing = false
     }
-
 }

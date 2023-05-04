@@ -24,11 +24,11 @@ class MainPresenter(
     private var disposable = CompositeDisposable()
 
     fun getAnime(binding: FragmentMainBinding) {
-        val rand = (4000..5000).random()
+        val rand = (5000..6000).random()
         disposable.add(
             mainRepository.getApiService().getAnime(rand)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Log.d("Anime", it.data.toString())
                     mainView.getAnime(it, binding)

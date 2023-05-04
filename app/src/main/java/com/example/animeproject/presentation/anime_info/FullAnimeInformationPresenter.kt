@@ -1,6 +1,11 @@
 package com.example.animeproject.presentation.anime_info
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.util.Log
+import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentManager
 import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
 import com.example.animeproject.domain.response.AnimeResponse
@@ -20,6 +25,9 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.delay
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 import javax.inject.Inject
 
 class FullAnimeInformationPresenter(
@@ -68,6 +76,16 @@ class FullAnimeInformationPresenter(
                 }
         }
 
+    }
+    fun bitmapImage(context: Context, imageUrl: String): Uri? {
+        val bmp: Bitmap = BitmapFactory.decodeStream(URL(imageUrl).openStream())
+        val cachePath = File(context.cacheDir, "images")
+        cachePath.mkdirs()
+        val imageFile = File(cachePath, "shared_image.jpg")
+        val stream = FileOutputStream(imageFile)
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.close()
+        return FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", imageFile)
     }
 
     override fun onDestroy() {
