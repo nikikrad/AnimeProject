@@ -261,36 +261,44 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_EndDate" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/back_comments"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_Video"
+                    />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginBottom="50dp"
                     android:background="@drawable/rectangle_anime_main_border"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/btn_Video">
+                    app:layout_constraintTop_toBottomOf="@id/rv_Comments">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_Comment"
                         android:layout_width="300dp"
                         android:layout_height="100dp"
+                        android:hint="Edit comment..."
                         app:layout_constraintTop_toBottomOf="@id/btn_Video"
                         android:inputType="textCapSentences"
                         android:maxLength="144"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_SendComment"
-                        android:layout_width="match_parent"
+                        android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_gravity="bottom"
-                        android:text="Отправить"
                         android:textAllCaps="false"
                         android:textSize="10sp"
-                        android:background="@drawable/rectangle_anime_main_border"
+                        android:background="@drawable/ic_send"
                         android:layout_marginStart="10dp"
                         android:gravity="center"/>
 

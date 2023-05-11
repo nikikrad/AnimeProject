@@ -11,6 +11,7 @@ import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
 import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.domain.response.DataResponse
 import com.example.animeproject.domain.response.SingleAnimeResponse
+import com.example.animeproject.presentation.anime_info.model_request.Comments
 import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
 import com.example.animeproject.presentation.dialog_description.DescriptionDialogFragment
 import com.example.animeproject.presentation.main.MainView
@@ -22,7 +23,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.io.File
@@ -61,10 +62,10 @@ class FullAnimeInformationPresenter(
     }
     private var megaStatus = true
 
-    fun getStatusAnime(id:String):Observable<Boolean>{
+    fun getStatusAnime(id:String):Observable<Boolean> {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
-        return Observable.create{ observable ->
+        return Observable.create { observable ->
             database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
                 .addOnSuccessListener {
                     it.children.forEach { data ->
@@ -77,6 +78,37 @@ class FullAnimeInformationPresenter(
         }
 
     }
+
+    fun sendComment(commentId: String, id: String, date: String, comment:String){
+        var auth = FirebaseAuth.getInstance()
+        var database = Firebase.database.reference
+        GlobalScope.launch(Dispatchers.IO){
+            database.child("Comments").child(id).child(commentId).setValue(Comments(commentId, id, auth.currentUser?.email.toString(), comment, date))
+        }
+    }
+
+    fun processingData(id: String): Observable<MutableList<Comments>> {
+        var database = Firebase.database.reference
+        var tempCommList: MutableList<Comments> = emptyList<Comments>().toMutableList()
+        return  Observable.create { observable ->
+            database.child("Comments").child(id)
+                .get()
+                .addOnSuccessListener {movieId->
+                    movieId.children.forEach { comments ->
+                        tempCommList.add(Comments(
+                            comments.child("comment_id").value.toString(),
+                            comments.child("movie_id").value.toString(),
+                            comments.child("user_name").value.toString(),
+                            comments.child("comment").value.toString(),
+                            comments.child("date").value.toString()
+                        ))
+                    }
+                    observable.onNext(tempCommList)
+                }
+        }
+
+    }
+
     fun bitmapImage(context: Context, imageUrl: String): Uri? {
         val bmp: Bitmap = BitmapFactory.decodeStream(URL(imageUrl).openStream())
         val cachePath = File(context.cacheDir, "images")

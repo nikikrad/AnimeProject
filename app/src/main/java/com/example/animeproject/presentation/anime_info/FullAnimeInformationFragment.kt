@@ -16,11 +16,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
 import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
 import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.domain.response.DataResponse
+import com.example.animeproject.presentation.anime_info.adapter.CommentsAdapter
 import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
 import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
 import com.example.animeproject.presentation.anime_info.video.VideoActivity
@@ -37,6 +39,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 
@@ -204,8 +208,40 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                     }
                 }, {
                     Log.e("Error", it.localizedMessage)
-                })
+                }),
+
+
         )
+        disposable.add(
+            presenter.processingData(animeResponse.data[0].id.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { comments ->
+
+                    val commentsAdapter = CommentsAdapter(comments)
+                    binding.rvComments.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    binding.rvComments.adapter = commentsAdapter
+
+                    binding.btnSendComment.setOnClickListener {
+                        val date = Calendar.getInstance().time
+                        val dateFormat = SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.getDefault())
+                        val formattedDate = dateFormat.format(date)
+                        presenter.sendComment(
+                            (comments.size + 1).toString(),
+                            animeResponse.data[0].id.toString(),
+                            formattedDate.toString(),
+                            binding.etComment.text.toString(),
+
+                        )
+                        binding.etComment.text?.clear()
+                        presenter.processingData(id.toString())
+                    }
+                }
+        )
+
+
+
         binding.btnDescription.setOnClickListener {
             binding.btnDescription.animation = AnimationUtils.loadAnimation(context, R.anim.alpha_anim)
             val bundle = Bundle()

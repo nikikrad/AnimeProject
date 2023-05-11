@@ -52,10 +52,12 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 presenter.getAnimeByName(query!!, binding)
                 binding.pbLoading.isVisible = true
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                presenter.getAnimeByName(newText!!, binding)
+                binding.pbLoading.isVisible = true
                 return true
             }
 
