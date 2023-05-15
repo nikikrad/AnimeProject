@@ -9,4 +9,7 @@ interface SearchView: MvpView {
 
     @AddToEndSingle
     fun getAnimeByName(animeResponse: AnimeResponse, binding: FragmentSearchBinding)
+
+    @AddToEndSingle
+    fun getAnimeByGenre(animeResponse: AnimeResponse, binding: FragmentSearchBinding)
 }

@@ -3,6 +3,7 @@ package com.example.animeproject.domain
 import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.domain.response.DataResponse
 import com.example.animeproject.domain.response.SingleAnimeResponse
+import com.example.animeproject.presentation.search.filter.Filter
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,6 +17,12 @@ interface ApiService {
     @GET("anime")
     fun getAnimeByName(
         @Query("filter[text]") nameAnime: String
+    ): Observable<AnimeResponse>
+
+    @GET("anime")
+    fun getAnimeByGenre(
+        @Query("filter[text]") nameAnime: String ,
+        @Query("filter[categories]") filter: String = Filter.getActiveGenreLikeText()
     ): Observable<AnimeResponse>
 
     @GET("anime")

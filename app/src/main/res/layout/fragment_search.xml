@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/kisame_back"
-    app:layoutDescription="@xml/fragment_search_scene">
+    android:background="@drawable/kisame_back">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Anime"
@@ -17,13 +17,29 @@
         android:id="@+id/sv_NameAnime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="50dp"
         android:background="@drawable/search_background"
         android:inputType="textShortMessage"
         app:iconifiedByDefault="false"
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@android:color/transparent"
         app:queryHint="Введите название..." />
+
+    <ImageButton
+        android:id="@+id/btn_Filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_more"
+        android:padding="8dp"
+        android:background="@drawable/search_background"
+        />
 
     <ProgressBar
         android:id="@+id/pb_Loading"
@@ -38,4 +54,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

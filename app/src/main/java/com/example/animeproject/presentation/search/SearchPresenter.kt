@@ -33,4 +33,18 @@ class SearchPresenter(
                 })
         )
     }
+
+    fun getAnimeByGenre(name: String, binding:FragmentSearchBinding) {
+
+        disposable.add(
+            searchRepository.getApiService().getAnimeByGenre(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    searchView.getAnimeByGenre(it, binding)
+                }, {
+                    Log.e("Error", it.localizedMessage.toString())
+                })
+        )
+    }
 }
