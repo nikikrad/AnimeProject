@@ -69,7 +69,7 @@
 
         <fragment
             android:id="@+id/fullAnimeInformationFragment"
-            android:name="com.example.animeproject.presentation.anime_info.FullAnimeInformationFragment"
+            android:name="com.example.animeproject.presentation.mult_info.FullMultInformationFragment"
             android:label="FullAnimeInformationFragment" >
             <action
                 android:id="@+id/action_fullAnimeInformationFragment_to_videoFragment"
@@ -77,11 +77,11 @@
         </fragment>
     <activity
         android:id="@+id/videoFragment"
-        android:name="com.example.animeproject.presentation.anime_info.video.VideoActivity"
+        android:name="com.example.animeproject.presentation.mult_info.video.VideoActivity"
         android:label="VideoFragment" />
     <fragment
         android:id="@+id/serialVideoFragment"
-        android:name="com.example.animeproject.presentation.anime_info.serial_video.SerialVideoFragment"
+        android:name="com.example.animeproject.presentation.mult_info.serial_video.SerialVideoFragment"
         android:label="SerialVideoFragment" />
 
 

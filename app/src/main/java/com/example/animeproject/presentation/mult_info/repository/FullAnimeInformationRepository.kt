@@ -1,4 +1,4 @@
-package com.example.animeproject.presentation.anime_info.repository
+package com.example.animeproject.presentation.mult_info.repository
 
 import com.example.animeproject.domain.ApiService
 import javax.inject.Inject

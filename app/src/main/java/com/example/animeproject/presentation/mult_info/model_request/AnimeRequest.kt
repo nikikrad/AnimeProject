@@ -1,4 +1,4 @@
-package com.example.animeproject.presentation.anime_info.model_request
+package com.example.animeproject.presentation.mult_info.model_request
 
 data class AnimeRequest(
     var id: String? = "null",

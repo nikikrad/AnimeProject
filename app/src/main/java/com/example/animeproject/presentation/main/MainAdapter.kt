@@ -27,7 +27,7 @@ class MainAdapter(
         viewType: Int
     ): MainViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_anime_main, parent, false)
+        val view = layoutInflater.inflate(R.layout.item_mult_main, parent, false)
         return MainViewHolder(view)
     }
 

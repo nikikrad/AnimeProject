@@ -1,6 +1,5 @@
-package com.example.animeproject.presentation.anime_info.video
+package com.example.animeproject.presentation.mult_info.video
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Toast
 import com.example.animeproject.BuildConfig

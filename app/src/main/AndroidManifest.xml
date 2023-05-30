@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.anime_info.video.VideoActivity">
+        <activity android:name=".presentation.mult_info.video.VideoActivity">
 
         </activity>
 

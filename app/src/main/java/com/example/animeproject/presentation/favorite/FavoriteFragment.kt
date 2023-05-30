@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeproject.databinding.FragmentFavoriteBinding
-import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
+import com.example.animeproject.presentation.mult_info.model_request.AnimeRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,19 +51,19 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    private var watchedAnimeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
-    private var unwatchedAnimeList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
+    private var watchedMultList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
+    private var unwatchedMultList: MutableList<AnimeRequest> = emptyList<AnimeRequest>().toMutableList()
     private lateinit var adapterWatched: FavoriteWatchedAdapter
     private lateinit var adapterUnWatched : FavoriteUnwatchedAdapter
 
     private fun processDataFromDatabase() {
-        watchedAnimeList.clear()
-        unwatchedAnimeList.clear()
+        watchedMultList.clear()
+        unwatchedMultList.clear()
         database.child(auth.currentUser?.email.toString().substringBefore("@")).get()
             .addOnSuccessListener { animeId ->
                 animeId.children.forEach { aboutAnime ->
                     if (aboutAnime.child("status").value as Boolean){
-                        watchedAnimeList.add(
+                        watchedMultList.add(
                             AnimeRequest(
                                 aboutAnime.child("id").value.toString(),
                                 aboutAnime.child("description").value.toString(),
@@ -78,7 +78,7 @@ class FavoriteFragment : Fragment() {
                             )
                         )
                     }else{
-                        unwatchedAnimeList.add(
+                        unwatchedMultList.add(
                             AnimeRequest(
                                 aboutAnime.child("id").value.toString(),
                                 aboutAnime.child("description").value.toString(),
@@ -94,9 +94,9 @@ class FavoriteFragment : Fragment() {
                         )
                     }
                 }
-                binding.pbLoading.isVisible = watchedAnimeList.isEmpty()
-                adapterWatched = FavoriteWatchedAdapter(watchedAnimeList)
-                binding.tvWatchedAnimeLabel.text = "Просмотренных аниме - ${watchedAnimeList.size}"
+                binding.pbLoading.isVisible = watchedMultList.isEmpty()
+                adapterWatched = FavoriteWatchedAdapter(watchedMultList)
+                binding.tvWatchedAnimeLabel.text = "Просмотренныу мультфильмы - ${watchedMultList.size}"
                 adapterWatched.notifyDataSetChanged()
                 val linearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
@@ -105,8 +105,8 @@ class FavoriteFragment : Fragment() {
                 binding.rvWatched.layoutManager = linearLayoutManager
                 binding.rvWatched.adapter = adapterWatched
 
-                adapterUnWatched = FavoriteUnwatchedAdapter(unwatchedAnimeList)
-                binding.tvUnWatchedAnimeLabel.text = "Не просмотренных аниме - ${unwatchedAnimeList.size}"
+                adapterUnWatched = FavoriteUnwatchedAdapter(unwatchedMultList)
+                binding.tvUnWatchedAnimeLabel.text = "Не просмотренныу мультфильмы - ${unwatchedMultList.size}"
                 adapterUnWatched.notifyDataSetChanged()
                 val unWatchedLinearLayoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)

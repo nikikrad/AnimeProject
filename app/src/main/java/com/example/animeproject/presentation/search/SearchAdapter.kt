@@ -1,7 +1,6 @@
 package com.example.animeproject.presentation.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ class SearchAdapter(
         viewType: Int
     ): SearchViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_anime_search, parent, false)
+        val view = layoutInflater.inflate(R.layout.item_mult_search, parent, false)
         return SearchViewHolder(view)
     }
 

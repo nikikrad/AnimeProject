@@ -1,15 +1,15 @@
 package com.example.animeproject.presentation.search
 
 import com.example.animeproject.databinding.FragmentSearchBinding
-import com.example.animeproject.domain.response.AnimeResponse
+import com.example.animeproject.domain.response.MultResponse
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
 
 interface SearchView: MvpView {
 
     @AddToEndSingle
-    fun getAnimeByName(animeResponse: AnimeResponse, binding: FragmentSearchBinding)
+    fun getMultByName(multResponse: MultResponse, binding: FragmentSearchBinding)
 
     @AddToEndSingle
-    fun getAnimeByGenre(animeResponse: AnimeResponse, binding: FragmentSearchBinding)
+    fun getMultByGenre(multResponse: MultResponse, binding: FragmentSearchBinding)
 }

@@ -1,4 +1,4 @@
-package com.example.animeproject.presentation.anime_info.model_request
+package com.example.animeproject.presentation.mult_info.model_request
 
 data class Comments(
     val comment_id: String,

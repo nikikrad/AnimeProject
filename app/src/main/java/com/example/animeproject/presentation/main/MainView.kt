@@ -1,14 +1,13 @@
 package com.example.animeproject.presentation.main
 
-import android.content.Context
 import com.example.animeproject.databinding.FragmentMainBinding
-import com.example.animeproject.domain.response.AnimeResponse
+import com.example.animeproject.domain.response.MultResponse
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
 
 interface MainView : MvpView {
 
     @AddToEndSingle
-    fun getAnime(anime: AnimeResponse, binding: FragmentMainBinding)
+    fun getMult(anime: MultResponse, binding: FragmentMainBinding)
 
 }

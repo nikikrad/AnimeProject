@@ -1,4 +1,4 @@
-package com.example.animeproject.presentation.anime_info.adapter
+package com.example.animeproject.presentation.mult_info.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animeproject.R
-import com.example.animeproject.presentation.anime_info.model_request.Comments
+import com.example.animeproject.presentation.mult_info.model_request.Comments
 
 class CommentsAdapter(
     private val movieList: MutableList<Comments>

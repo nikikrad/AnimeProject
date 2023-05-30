@@ -1,5 +1,5 @@
 package com.example.animeproject.domain.response
 
-data class AnimeResponse(
+data class MultResponse(
     val data: List<DataResponse>
 )

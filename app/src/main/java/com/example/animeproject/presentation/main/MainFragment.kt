@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.animeproject.databinding.FragmentMainBinding
-import com.example.animeproject.domain.response.AnimeResponse
+import com.example.animeproject.domain.response.MultResponse
 import com.example.animeproject.presentation.main.repository.MainRepository
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.disposables.CompositeDisposable
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -33,13 +32,13 @@ class MainFragment : MvpAppCompatFragment(), MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.getAnime(binding)
+        presenter.getMult(binding)
         binding.swipeToRefresh.setOnRefreshListener {
             refreshMainView()
         }
     }
 
-    override fun getAnime(anime: AnimeResponse, bind: FragmentMainBinding) {
+    override fun getMult(anime: MultResponse, bind: FragmentMainBinding) {
         binding = bind
         binding.pbLoading.isVisible = anime.data.isEmpty()
         val adapter = MainAdapter(anime.data)
@@ -48,7 +47,7 @@ class MainFragment : MvpAppCompatFragment(), MainView {
     }
 
     private fun refreshMainView(){
-        presenter.getAnime(binding)
+        presenter.getMult(binding)
         binding.swipeToRefresh.isRefreshing = false
     }
 }

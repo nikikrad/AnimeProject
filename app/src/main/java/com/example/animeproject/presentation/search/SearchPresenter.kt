@@ -2,16 +2,11 @@ package com.example.animeproject.presentation.search
 
 import android.util.Log
 import com.example.animeproject.databinding.FragmentSearchBinding
-import com.example.animeproject.domain.response.AnimeResponse
-import com.example.animeproject.presentation.main.MainView
 import com.example.animeproject.presentation.search.repository.SearchRepository
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import moxy.InjectViewState
 import moxy.MvpPresenter
-import javax.inject.Inject
 
 class SearchPresenter(
     private val searchRepository: SearchRepository,
@@ -20,28 +15,28 @@ class SearchPresenter(
 
     private var disposable = CompositeDisposable()
 
-    fun getAnimeByName(name: String, binding:FragmentSearchBinding) {
+    fun getMultByName(name: String, binding:FragmentSearchBinding) {
 
         disposable.add(
-            searchRepository.getApiService().getAnimeByName(name)
+            searchRepository.getApiService().getMultByName(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    searchView.getAnimeByName(it, binding)
+                    searchView.getMultByName(it, binding)
                 }, {
                     Log.e("Error", it.localizedMessage.toString())
                 })
         )
     }
 
-    fun getAnimeByGenre(name: String, binding:FragmentSearchBinding) {
+    fun getMultByGenre(name: String, binding:FragmentSearchBinding) {
 
         disposable.add(
-            searchRepository.getApiService().getAnimeByGenre(name)
+            searchRepository.getApiService().getMultByGenre(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    searchView.getAnimeByGenre(it, binding)
+                    searchView.getMultByGenre(it, binding)
                 }, {
                     Log.e("Error", it.localizedMessage.toString())
                 })

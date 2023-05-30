@@ -1,4 +1,4 @@
-package com.example.animeproject.presentation.anime_info
+package com.example.animeproject.presentation.mult_info
 
 import android.content.Intent
 import android.content.res.Resources
@@ -15,17 +15,16 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.animeproject.R
-import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
-import com.example.animeproject.domain.response.AnimeResponse
+import com.example.animeproject.databinding.FragmentFullMultInformationBinding
+import com.example.animeproject.domain.response.MultResponse
 import com.example.animeproject.domain.response.DataResponse
-import com.example.animeproject.presentation.anime_info.adapter.CommentsAdapter
-import com.example.animeproject.presentation.anime_info.model_request.AnimeRequest
-import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
-import com.example.animeproject.presentation.anime_info.video.VideoActivity
+import com.example.animeproject.presentation.mult_info.adapter.CommentsAdapter
+import com.example.animeproject.presentation.mult_info.model_request.AnimeRequest
+import com.example.animeproject.presentation.mult_info.repository.FullAnimeInformationRepository
+import com.example.animeproject.presentation.mult_info.video.VideoActivity
 import com.example.animeproject.presentation.dialog_description.DescriptionDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -33,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -45,9 +43,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformationView {
+class FullMultInformationFragment : MvpAppCompatFragment(), FullMultInformationView {
 
-    lateinit var binding: FragmentFullAnimeInformationBinding
+    lateinit var binding: FragmentFullMultInformationBinding
 
     private var disposable = CompositeDisposable()
     private var ID: Int = 0
@@ -57,8 +55,8 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
 
     @Inject
     lateinit var fullAnimeInformationRepository: FullAnimeInformationRepository
-    private val presenter: FullAnimeInformationPresenter by moxyPresenter {
-        FullAnimeInformationPresenter(
+    private val presenter: FullMultInformationPresenter by moxyPresenter {
+        FullMultInformationPresenter(
             fullAnimeInformationRepository,
             this
         )
@@ -73,7 +71,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFullAnimeInformationBinding.inflate(inflater, container, false)
+        binding = FragmentFullMultInformationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -81,7 +79,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
 
         dialogFragment = DescriptionDialogFragment()
         ID = arguments?.getInt("ID")!!
-        presenter.getAnimeById(ID, binding, dialogFragment, childFragmentManager)
+        presenter.getMultById(ID, binding, dialogFragment, childFragmentManager)
 
         binding.btnBack.setOnClickListener {
             binding.btnBack.animation = AnimationUtils.loadAnimation(context, R.anim.scale_anim)
@@ -90,17 +88,17 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun getAnimeById(
-        animeResponse: AnimeResponse,
-        bind: FragmentFullAnimeInformationBinding,
+    override fun getMultById(
+        multResponse: MultResponse,
+        bind: FragmentFullMultInformationBinding,
         dialog: DescriptionDialogFragment,
         fragmentManager: FragmentManager
     ) {
         binding = bind
-        binding.pbLoading.isVisible = animeResponse.data.isEmpty()
-        animeById = animeResponse.data
+        binding.pbLoading.isVisible = multResponse.data.isEmpty()
+        animeById = multResponse.data
 
-        Log.e("ANIME", animeResponse.toString())
+        Log.e("ANIME", multResponse.toString())
         try {
             Glide.with(binding.root)
                 .load(animeById[0].attributes.coverImage.original)
@@ -159,7 +157,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
         binding.tvEndDate.text = animeById[0].attributes.endDate
 
         disposable.add(
-            presenter.getStatusAnime(animeById[0].id.toString())
+            presenter.getStatusMult(animeById[0].id.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ statusAnime ->
@@ -213,7 +211,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
 
         )
         disposable.add(
-            presenter.processingData(animeResponse.data[0].id.toString())
+            presenter.processingData(multResponse.data[0].id.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { comments ->
@@ -229,7 +227,7 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                         val formattedDate = dateFormat.format(date)
                         presenter.sendComment(
                             (comments.size + 1).toString(),
-                            animeResponse.data[0].id.toString(),
+                            multResponse.data[0].id.toString(),
                             formattedDate.toString(),
                             binding.etComment.text.toString(),
 
@@ -262,11 +260,11 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
                 shareIntent.type = "image/*"
                 val image = presenter.bitmapImage(
                     requireContext(),
-                    animeResponse.data[0].attributes.posterImage.original
+                    multResponse.data[0].attributes.posterImage.original
                 )
                 withContext(Dispatchers.Main) {
                     shareIntent.putExtra(Intent.EXTRA_STREAM, image)
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${animeResponse.data[0].attributes.titles.en_jp}\n\nhttps://www.youtube.com/watch?v=${animeResponse.data[0].attributes.youtubeVideo}")
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${multResponse.data[0].attributes.titles.en_jp}\n\nhttps://www.youtube.com/watch?v=${multResponse.data[0].attributes.youtubeVideo}")
                     requireActivity().startActivity(
                         Intent.createChooser(
                             shareIntent,
@@ -277,10 +275,5 @@ class FullAnimeInformationFragment : MvpAppCompatFragment(), FullAnimeInformatio
 
             }
         }
-
-        binding.btnSendComment.setOnClickListener {
-
-        }
-
     }
 }

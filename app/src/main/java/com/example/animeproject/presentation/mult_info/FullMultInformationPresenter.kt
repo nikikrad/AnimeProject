@@ -1,4 +1,4 @@
-package com.example.animeproject.presentation.anime_info
+package com.example.animeproject.presentation.mult_info
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,14 +7,10 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentManager
-import com.example.animeproject.databinding.FragmentFullAnimeInformationBinding
-import com.example.animeproject.domain.response.AnimeResponse
-import com.example.animeproject.domain.response.DataResponse
-import com.example.animeproject.domain.response.SingleAnimeResponse
-import com.example.animeproject.presentation.anime_info.model_request.Comments
-import com.example.animeproject.presentation.anime_info.repository.FullAnimeInformationRepository
+import com.example.animeproject.databinding.FragmentFullMultInformationBinding
+import com.example.animeproject.presentation.mult_info.model_request.Comments
+import com.example.animeproject.presentation.mult_info.repository.FullAnimeInformationRepository
 import com.example.animeproject.presentation.dialog_description.DescriptionDialogFragment
-import com.example.animeproject.presentation.main.MainView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -24,17 +20,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
-import moxy.InjectViewState
 import moxy.MvpPresenter
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 import javax.inject.Inject
 
-class FullAnimeInformationPresenter(
-    private val fullAnimeInformationRepository: FullAnimeInformationRepository,
-    private val fullAnimeInformationView: FullAnimeInformationView
-) : MvpPresenter<FullAnimeInformationView>() {
+class FullMultInformationPresenter(
+    private val fullMultInformationRepository: FullAnimeInformationRepository,
+    private val fullMultInformationView: FullMultInformationView
+) : MvpPresenter<FullMultInformationView>() {
 
     @Inject
     lateinit var database: DatabaseReference
@@ -43,18 +38,18 @@ class FullAnimeInformationPresenter(
 
     private val disposable = CompositeDisposable()
 
-    fun getAnimeById(
+    fun getMultById(
         id: Int,
-        binding: FragmentFullAnimeInformationBinding,
+        binding: FragmentFullMultInformationBinding,
         dialog: DescriptionDialogFragment,
         fragmentManager: FragmentManager
     ) {
         disposable.add(
-            fullAnimeInformationRepository.getApiService().getAnimeById(id)
+            fullMultInformationRepository.getApiService().getMultById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    fullAnimeInformationView.getAnimeById(it, binding, dialog, fragmentManager)
+                    fullMultInformationView.getMultById(it, binding, dialog, fragmentManager)
                 }, {
                     Log.e("Error", it.localizedMessage)
                 })
@@ -62,7 +57,7 @@ class FullAnimeInformationPresenter(
     }
     private var megaStatus = true
 
-    fun getStatusAnime(id:String):Observable<Boolean> {
+    fun getStatusMult(id:String):Observable<Boolean> {
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
         return Observable.create { observable ->

@@ -1,20 +1,12 @@
 package com.example.animeproject.presentation.main
 
-import android.content.Context
 import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.animeproject.databinding.FragmentMainBinding
-import com.example.animeproject.domain.response.AnimeResponse
 import com.example.animeproject.presentation.main.repository.MainRepository
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import moxy.InjectViewState
 import moxy.MvpPresenter
-import javax.inject.Inject
 
 class MainPresenter(
     private val mainRepository: MainRepository,
@@ -23,15 +15,15 @@ class MainPresenter(
 
     private var disposable = CompositeDisposable()
 
-    fun getAnime(binding: FragmentMainBinding) {
+    fun getMult(binding: FragmentMainBinding) {
         val rand = (5000..6000).random()
         disposable.add(
-            mainRepository.getApiService().getAnime(rand)
+            mainRepository.getApiService().getMult(rand)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Log.d("Anime", it.data.toString())
-                    mainView.getAnime(it, binding)
+                    mainView.getMult(it, binding)
                 }, {
                     Log.e("Error", it?.localizedMessage.toString())
                 })
